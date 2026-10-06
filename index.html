@@ -6,15 +6,29 @@
 <title>Zain Khan | SQL Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  document.documentElement.classList.add('js');
+  // Apply a saved theme choice before the page paints, so there is no flash
+  try {
+    var saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+  } catch (e) {}
+</script>
 <style>
+  /* Light theme (default) */
   :root {
+    color-scheme: light;
     --paper: #f2f5f8;
     --panel: #ffffff;
+    --nav-bg: rgba(255,255,255,.92);
     --ink: #16222d;
     --muted: #55677a;
     --line: #d5dde6;
+    --th-bg: #eaf0f6;
     --accent: #2456c9;
+    --accent-hover: #1b45a6;
     --accent-soft: #c9d8f7;
+    --on-accent: #ffffff;
     --code-bg: #14202c;
     --code-bar: #1d2d3d;
     --code-ink: #dbe7f3;
@@ -22,9 +36,46 @@
     --str: #9fe0b0;
     --cmt: #7d93a8;
   }
+  /* Dark theme: follows the device unless the visitor picked light */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #0f1720;
+      --panel: #17222e;
+      --nav-bg: rgba(23,34,46,.92);
+      --ink: #e6edf4;
+      --muted: #9fb0c1;
+      --line: #2a3a4a;
+      --th-bg: #1e2c3b;
+      --accent: #7aa5ff;
+      --accent-hover: #9dbcff;
+      --accent-soft: #223a66;
+      --on-accent: #0b1420;
+      --code-bg: #0b121a;
+      --code-bar: #131f2c;
+    }
+  }
+  /* Dark theme: chosen with the toggle button */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #0f1720;
+    --panel: #17222e;
+    --nav-bg: rgba(23,34,46,.92);
+    --ink: #e6edf4;
+    --muted: #9fb0c1;
+    --line: #2a3a4a;
+    --th-bg: #1e2c3b;
+    --accent: #7aa5ff;
+    --accent-hover: #9dbcff;
+    --accent-soft: #223a66;
+    --on-accent: #0b1420;
+    --code-bg: #0b121a;
+    --code-bar: #131f2c;
+  }
+
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.05rem/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.05rem/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; transition: background .3s, color .3s; }
   a { color: var(--accent); }
   a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
@@ -32,12 +83,15 @@
   .str { color: var(--str); }
   .cmt { color: var(--cmt); }
 
-  nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.92); backdrop-filter: blur(6px); }
+  nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: var(--nav-bg); backdrop-filter: blur(6px); }
   nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: .9rem; padding-bottom: .9rem; flex-wrap: wrap; gap: .5rem; }
   nav strong { font-weight: 600; }
+  .nav-right { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
   nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
-  nav a { color: var(--ink); text-decoration: none; font-size: .95rem; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .25s; padding-bottom: 2px; }
-  nav a:hover { background-size: 100% 2px; }
+  nav ul a { color: var(--ink); text-decoration: none; font-size: .95rem; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .25s; padding-bottom: 2px; }
+  nav ul a:hover { background-size: 100% 2px; }
+  .theme { background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: .3rem .75rem; font: 500 .85rem "IBM Plex Sans", sans-serif; cursor: pointer; transition: border-color .2s, color .2s; }
+  .theme:hover { border-color: var(--accent); color: var(--accent); }
 
   /* Hero: an editor window that types out the intro query */
   .hero { padding: 4rem 0 3rem; }
@@ -53,7 +107,7 @@
   .result.show { opacity: 1; transform: none; }
   table { width: 100%; border-collapse: collapse; font-size: .95rem; }
   th, td { text-align: left; padding: .7rem 1.2rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { font: 500 .85rem "IBM Plex Mono", monospace; color: var(--muted); background: #eaf0f6; }
+  th { font: 500 .85rem "IBM Plex Mono", monospace; color: var(--muted); background: var(--th-bg); }
   tr:last-child td { border-bottom: 0; }
 
   .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; margin: 2.4rem 0 .6rem; font-weight: 600; }
@@ -64,7 +118,7 @@
   h3 { font-size: 1.25rem; margin: 0; font-weight: 600; }
   p { max-width: 68ch; }
 
-  .project { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem; margin-bottom: 1.8rem; transition: border-color .2s, box-shadow .2s; }
+  .project { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem; margin-bottom: 1.8rem; transition: border-color .2s, box-shadow .2s, background .3s; }
   .project:hover { border-color: var(--accent); box-shadow: 6px 6px 0 var(--accent-soft); }
   .project .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
   .meta { color: var(--muted); font-size: .95rem; margin: .3rem 0 1rem; }
@@ -73,10 +127,10 @@
   .project ol { margin: 0; padding-left: 1.3rem; max-width: 68ch; }
   .project li { margin-bottom: .35rem; }
 
-  .run { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent); color: #fff; border: 0; border-radius: 6px; padding: .55rem 1rem; font: 500 .9rem "IBM Plex Sans", sans-serif; cursor: pointer; transition: transform .15s, background .15s; }
-  .run:hover { background: #1b45a6; transform: translateY(-1px); }
+  .run { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent); color: var(--on-accent); border: 0; border-radius: 6px; padding: .55rem 1rem; font: 500 .9rem "IBM Plex Sans", sans-serif; cursor: pointer; transition: transform .15s, background .15s; }
+  .run:hover { background: var(--accent-hover); transform: translateY(-1px); }
   .run:active { transform: translateY(1px); }
-  .run::before { content: ""; border-left: 9px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+  .run::before { content: ""; border-left: 9px solid var(--on-accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
   .output { display: none; margin-top: .8rem; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; }
   .output.open { display: block; }
   .output tbody tr { opacity: 0; }
@@ -84,7 +138,7 @@
   @keyframes rowIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
 
   .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-  .skills div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.3rem; transition: transform .2s, border-color .2s; }
+  .skills div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.3rem; transition: transform .2s, border-color .2s, background .3s; }
   .skills div:hover { transform: translateY(-4px); border-color: var(--accent); }
   .skills h3 { font-size: 1.05rem; }
   .skills p { margin: .3rem 0 0; color: var(--muted); font-size: .95rem; }
@@ -100,6 +154,8 @@
     .project { padding: 1.1rem; }
     th, td { padding: .6rem .8rem; }
     #typed { font-size: .9rem; padding: 1.1rem; }
+    .nav-right { gap: .9rem; }
+    nav ul { gap: .9rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -108,17 +164,19 @@
 </style>
 </head>
 <body>
-<script>document.documentElement.classList.add('js');</script>
 
 <nav>
   <div class="wrap">
     <strong>Zain Khan</strong>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">SQL projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">SQL projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme" id="themeBtn" type="button">Dark mode</button>
+    </div>
   </div>
 </nav>
 
@@ -245,6 +303,24 @@
 <script>
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, reduce ? 0 : ms); }); };
+
+  // 0. Dark mode: follows the device, and the button overrides it
+  var root = document.documentElement;
+  var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  var themeBtn = document.getElementById('themeBtn');
+  function isDark() {
+    var t = root.getAttribute('data-theme');
+    return t ? t === 'dark' : darkQuery.matches;
+  }
+  function updateLabel() { themeBtn.textContent = isDark() ? 'Light mode' : 'Dark mode'; }
+  themeBtn.addEventListener('click', function () {
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    updateLabel();
+  });
+  if (darkQuery.addEventListener) darkQuery.addEventListener('change', updateLabel);
+  updateLabel();
 
   // 1. Hero query types itself out, then the result table slides in
   var lines = [
