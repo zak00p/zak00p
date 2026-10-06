@@ -1,10 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Zain Khan | Portfolio</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zain Khan | SQL Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f2f5f8;
+    --panel: #ffffff;
+    --ink: #16222d;
+    --muted: #55677a;
+    --line: #d5dde6;
+    --accent: #2456c9;
+    --code-bg: #14202c;
+    --code-ink: #dbe7f3;
+    --kw: #7fb0ff;
+    --str: #9fe0b0;
+    --cmt: #7d93a8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1.05rem/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
+
+  nav { border-bottom: 1px solid var(--line); background: var(--panel); }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: .9rem; padding-bottom: .9rem; flex-wrap: wrap; gap: .5rem; }
+  nav strong { font-weight: 600; }
+  nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
+  nav a { color: var(--ink); text-decoration: none; font-size: .95rem; }
+  nav a:hover { color: var(--accent); text-decoration: underline; }
+
+  /* Hero: the intro is written as a query and its result */
+  .hero { padding: 4rem 0 3rem; }
+  .query {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 8px 8px 0 0;
+    padding: 1.4rem 1.6rem;
+    font: 400 1rem/1.7 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+    overflow-x: auto;
+  }
+  .kw { color: var(--kw); font-weight: 500; }
+  .str { color: var(--str); }
+  .cmt { color: var(--cmt); }
+  .result { background: var(--panel); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; overflow-x: auto; }
+  .result table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .result th, .result td { text-align: left; padding: .7rem 1.2rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .result th { font: 500 .85rem "IBM Plex Mono", monospace; color: var(--muted); background: #eaf0f6; }
+  .result tr:last-child td { border-bottom: 0; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 2.2rem 0 .6rem; font-weight: 600; }
+  .hero p.lead { color: var(--muted); max-width: 60ch; margin: 0; }
+
+  section { padding: 3rem 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 1.7rem; margin: 0 0 1.2rem; font-weight: 600; }
+  h3 { font-size: 1.25rem; margin: 0 0 .3rem; font-weight: 600; }
+  p { max-width: 68ch; }
+
+  .project { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 1.6rem; margin-bottom: 1.8rem; }
+  .project .meta { color: var(--muted); font-size: .95rem; margin: 0 0 1rem; }
+  .project h4 { margin: 1.4rem 0 .4rem; font-size: 1rem; font-weight: 600; }
+  .project pre { margin: 0; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; padding: 1.1rem 1.2rem; overflow-x: auto; font: 400 .92rem/1.65 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
+  .project ol { margin: 0; padding-left: 1.3rem; max-width: 68ch; }
+  .project li { margin-bottom: .35rem; }
+
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .skills div { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.3rem; }
+  .skills h3 { font-size: 1.05rem; }
+  .skills p { margin: .3rem 0 0; color: var(--muted); font-size: .95rem; }
+
+  footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; }
+
+  @media (max-width: 600px) {
+    .hero { padding-top: 2.5rem; }
+    .project { padding: 1.1rem; }
+    .result th, .result td { padding: .6rem .8rem; }
+  }
+</style>
 </head>
 <body>
-  <h1>Hi, I'm Zain</h1>
-  <p>Welcome to my portfolio.</p>
+
+<nav>
+  <div class="wrap">
+    <strong>Zain Khan</strong>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">SQL projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="query" aria-hidden="true">
+<span class="kw">SELECT</span> name, role, location<br>
+<span class="kw">FROM</span>   me<br>
+<span class="kw">WHERE</span>  status = <span class="str">'open to opportunities'</span>;
+    </div>
+    <div class="result">
+      <table>
+        <thead><tr><th>name</th><th>role</th><th>location</th></tr></thead>
+        <tbody><tr><td>Zain Khan</td><td>SQL Data Analyst</td><td>Boulder</td></tr></tbody>
+      </table>
+    </div>
+    <h1>Zain Khan</h1>
+    <p class="lead">Information Science & Computer Science Student at CU Boulder.</p>
+  </div>
+</header>
+
+<main>
+  <section id="about">
+    <div class="wrap">
+      <h2>About me</h2>
+      <p>I am a student at CU Boulder and this bio will be worked on soon lolol</p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2>SQL projects</h2>
+      <p>I'll put some projects here soon...</p>
+
+      <article class="project">
+        <h3>Project title:</h3>
+        <p class="meta">Something will go here soon...</p>
+
+        <h4>The question</h4>
+        <p>This project does something I think...</p>
+
+        <h4>The query</h4>
+<pre><code><span class="cmt">-- query here.</span>
+<span class="kw">SELECT</span> ...
+<span class="kw">FROM</span> ...
+<span class="kw">WHERE</span> ...;</code></pre>
+
+        <h4>How it works</h4>
+        <ol>
+          <li>Explain what the FROM / JOIN part does and which tables it uses.</li>
+          <li>Explain the WHERE or HAVING filter and why you chose it.</li>
+          <li>Explain any GROUP BY, aggregate, subquery, or window function.</li>
+        </ol>
+
+        <h4>What I found</h4>
+        <p>I'll do this soon...</p>
+      </article>
+
+      <article class="project">
+        <h3>Second project title</h3>
+        <p class="meta">Database: ... &nbsp;|&nbsp; Tools: ...</p>
+        <h4>The question</h4>
+        <p>...</p>
+        <h4>The query</h4>
+<pre><code><span class="cmt">-- Your second query.</span></code></pre>
+        <h4>How it works</h4>
+        <p>...</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div><h3>SQL</h3><p>SQL skills here...</p></div>
+        <div><h3>Tools</h3><p>Stuff I've used...</p></div>
+        <div><h3>Other</h3><p>Traits and stuff...</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:zpashakhan94@gmail.com</a></p>
+      <p>LinkedIn: <a href="www.linkedin.com/in/zain-khan-6a7767333</a></p>
+      <p>Resume: <a href="resume.pdf">Download my resume (PDF)</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">&copy; 2026 Zain Khan</div>
+</footer>
+
 </body>
 </html>
