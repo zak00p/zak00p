@@ -14,7 +14,9 @@
     --muted: #55677a;
     --line: #d5dde6;
     --accent: #2456c9;
+    --accent-soft: #c9d8f7;
     --code-bg: #14202c;
+    --code-bar: #1d2d3d;
     --code-ink: #dbe7f3;
     --kw: #7fb0ff;
     --str: #9fe0b0;
@@ -22,72 +24,91 @@
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font: 400 1.05rem/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.05rem/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
   a { color: var(--accent); }
   a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
   .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
-  .mono { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
-
-  nav { border-bottom: 1px solid var(--line); background: var(--panel); }
-  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: .9rem; padding-bottom: .9rem; flex-wrap: wrap; gap: .5rem; }
-  nav strong { font-weight: 600; }
-  nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
-  nav a { color: var(--ink); text-decoration: none; font-size: .95rem; }
-  nav a:hover { color: var(--accent); text-decoration: underline; }
-
-  /* Hero: the intro is written as a query and its result */
-  .hero { padding: 4rem 0 3rem; }
-  .query {
-    background: var(--code-bg);
-    color: var(--code-ink);
-    border-radius: 8px 8px 0 0;
-    padding: 1.4rem 1.6rem;
-    font: 400 1rem/1.7 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-    overflow-x: auto;
-  }
   .kw { color: var(--kw); font-weight: 500; }
   .str { color: var(--str); }
   .cmt { color: var(--cmt); }
-  .result { background: var(--panel); border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px; overflow-x: auto; }
-  .result table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-  .result th, .result td { text-align: left; padding: .7rem 1.2rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-  .result th { font: 500 .85rem "IBM Plex Mono", monospace; color: var(--muted); background: #eaf0f6; }
-  .result tr:last-child td { border-bottom: 0; }
-  .hero h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; margin: 2.2rem 0 .6rem; font-weight: 600; }
+
+  nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.92); backdrop-filter: blur(6px); }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: .9rem; padding-bottom: .9rem; flex-wrap: wrap; gap: .5rem; }
+  nav strong { font-weight: 600; }
+  nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
+  nav a { color: var(--ink); text-decoration: none; font-size: .95rem; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .25s; padding-bottom: 2px; }
+  nav a:hover { background-size: 100% 2px; }
+
+  /* Hero: an editor window that types out the intro query */
+  .hero { padding: 4rem 0 3rem; }
+  .editor { background: var(--code-bg); border-radius: 10px; box-shadow: 8px 8px 0 var(--accent-soft); overflow: hidden; }
+  .bar { background: var(--code-bar); padding: .6rem 1rem; display: flex; align-items: center; gap: .45rem; }
+  .bar i { width: 11px; height: 11px; border-radius: 50%; background: #3d5266; display: block; }
+  .bar span { margin-left: .6rem; color: var(--cmt); font: 400 .85rem "IBM Plex Mono", monospace; }
+  #typed { margin: 0; padding: 1.4rem 1.6rem; color: var(--code-ink); font: 400 1.05rem/1.8 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; min-height: 8.6rem; overflow-x: auto; }
+  .cursor { display: inline-block; width: .6ch; height: 1.1em; background: var(--kw); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .result { margin-top: 1.4rem; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .5s; }
+  .result.show { opacity: 1; transform: none; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: .7rem 1.2rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font: 500 .85rem "IBM Plex Mono", monospace; color: var(--muted); background: #eaf0f6; }
+  tr:last-child td { border-bottom: 0; }
+
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; margin: 2.4rem 0 .6rem; font-weight: 600; }
   .hero p.lead { color: var(--muted); max-width: 60ch; margin: 0; }
 
   section { padding: 3rem 0; border-top: 1px solid var(--line); }
   h2 { font-size: 1.7rem; margin: 0 0 1.2rem; font-weight: 600; }
-  h3 { font-size: 1.25rem; margin: 0 0 .3rem; font-weight: 600; }
+  h3 { font-size: 1.25rem; margin: 0; font-weight: 600; }
   p { max-width: 68ch; }
 
-  .project { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 1.6rem; margin-bottom: 1.8rem; }
-  .project .meta { color: var(--muted); font-size: .95rem; margin: 0 0 1rem; }
+  .project { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem; margin-bottom: 1.8rem; transition: border-color .2s, box-shadow .2s; }
+  .project:hover { border-color: var(--accent); box-shadow: 6px 6px 0 var(--accent-soft); }
+  .project .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+  .meta { color: var(--muted); font-size: .95rem; margin: .3rem 0 1rem; }
   .project h4 { margin: 1.4rem 0 .4rem; font-size: 1rem; font-weight: 600; }
   .project pre { margin: 0; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; padding: 1.1rem 1.2rem; overflow-x: auto; font: 400 .92rem/1.65 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
   .project ol { margin: 0; padding-left: 1.3rem; max-width: 68ch; }
   .project li { margin-bottom: .35rem; }
 
+  .run { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent); color: #fff; border: 0; border-radius: 6px; padding: .55rem 1rem; font: 500 .9rem "IBM Plex Sans", sans-serif; cursor: pointer; transition: transform .15s, background .15s; }
+  .run:hover { background: #1b45a6; transform: translateY(-1px); }
+  .run:active { transform: translateY(1px); }
+  .run::before { content: ""; border-left: 9px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+  .output { display: none; margin-top: .8rem; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; }
+  .output.open { display: block; }
+  .output tbody tr { opacity: 0; }
+  .output tbody tr.in { animation: rowIn .45s ease forwards; }
+  @keyframes rowIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+
   .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-  .skills div { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.3rem; }
+  .skills div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.3rem; transition: transform .2s, border-color .2s; }
+  .skills div:hover { transform: translateY(-4px); border-color: var(--accent); }
   .skills h3 { font-size: 1.05rem; }
   .skills p { margin: .3rem 0 0; color: var(--muted); font-size: .95rem; }
 
   footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; }
 
+  /* Scroll reveal (only when JS is running) */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s, transform .6s; }
+  .js .reveal.in { opacity: 1; transform: none; }
+
   @media (max-width: 600px) {
     .hero { padding-top: 2.5rem; }
     .project { padding: 1.1rem; }
-    .result th, .result td { padding: .6rem .8rem; }
+    th, td { padding: .6rem .8rem; }
+    #typed { font-size: .9rem; padding: 1.1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .js .reveal, .result, .output tbody tr { opacity: 1; transform: none; }
   }
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js');</script>
 
 <nav>
   <div class="wrap">
@@ -103,24 +124,23 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="query" aria-hidden="true">
-<span class="kw">SELECT</span> name, role, location<br>
-<span class="kw">FROM</span>   me<br>
-<span class="kw">WHERE</span>  status = <span class="str">'open to opportunities'</span>;
+    <div class="editor">
+      <div class="bar"><i></i><i></i><i></i><span>portfolio.sql</span></div>
+      <pre id="typed" aria-label="SELECT name, role, location FROM me WHERE status = 'open to opportunities';"></pre>
     </div>
-    <div class="result">
+    <div class="result" id="heroResult">
       <table>
         <thead><tr><th>name</th><th>role</th><th>location</th></tr></thead>
         <tbody><tr><td>Zain Khan</td><td>SQL Data Analyst</td><td>Boulder</td></tr></tbody>
       </table>
     </div>
     <h1>Zain Khan</h1>
-    <p class="lead">Information Science & Computer Science Student at CU Boulder.</p>
+    <p class="lead">Information Science &amp; Computer Science Student at CU Boulder.</p>
   </div>
 </header>
 
 <main>
-  <section id="about">
+  <section id="about" class="reveal">
     <div class="wrap">
       <h2>About me</h2>
       <p>I am a student at CU Boulder and this bio will be worked on soon lolol</p>
@@ -129,12 +149,17 @@
 
   <section id="projects">
     <div class="wrap">
-      <h2>SQL projects</h2>
-      <p>I'll put some projects here soon...</p>
+      <h2 class="reveal">SQL projects</h2>
+      <p class="reveal">I'll put some projects here soon...</p>
 
-      <article class="project">
-        <h3>Project title:</h3>
-        <p class="meta">Something will go here soon...</p>
+      <article class="project reveal">
+        <div class="top">
+          <div>
+            <h3>Project title:</h3>
+            <p class="meta">Something will go here soon...</p>
+          </div>
+          <button class="run" type="button">Run query</button>
+        </div>
 
         <h4>The question</h4>
         <p>This project does something I think...</p>
@@ -144,6 +169,17 @@
 <span class="kw">SELECT</span> ...
 <span class="kw">FROM</span> ...
 <span class="kw">WHERE</span> ...;</code></pre>
+
+        <div class="output">
+          <table>
+            <thead><tr><th>column_one</th><th>column_two</th></tr></thead>
+            <tbody>
+              <tr><td>Replace with</td><td>your real result</td></tr>
+              <tr><td>Row two</td><td>Value</td></tr>
+              <tr><td>Row three</td><td>Value</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <h4>How it works</h4>
         <ol>
@@ -156,13 +192,27 @@
         <p>I'll do this soon...</p>
       </article>
 
-      <article class="project">
-        <h3>Second project title</h3>
-        <p class="meta">Database: ... &nbsp;|&nbsp; Tools: ...</p>
+      <article class="project reveal">
+        <div class="top">
+          <div>
+            <h3>Second project title</h3>
+            <p class="meta">Database: ... &nbsp;|&nbsp; Tools: ...</p>
+          </div>
+          <button class="run" type="button">Run query</button>
+        </div>
         <h4>The question</h4>
         <p>...</p>
         <h4>The query</h4>
 <pre><code><span class="cmt">-- Your second query.</span></code></pre>
+        <div class="output">
+          <table>
+            <thead><tr><th>column_one</th><th>column_two</th></tr></thead>
+            <tbody>
+              <tr><td>Replace with</td><td>your real result</td></tr>
+              <tr><td>Row two</td><td>Value</td></tr>
+            </tbody>
+          </table>
+        </div>
         <h4>How it works</h4>
         <p>...</p>
       </article>
@@ -171,8 +221,8 @@
 
   <section id="skills">
     <div class="wrap">
-      <h2>Skills</h2>
-      <div class="skills">
+      <h2 class="reveal">Skills</h2>
+      <div class="skills reveal">
         <div><h3>SQL</h3><p>SQL skills here...</p></div>
         <div><h3>Tools</h3><p>Stuff I've used...</p></div>
         <div><h3>Other</h3><p>Traits and stuff...</p></div>
@@ -180,19 +230,79 @@
     </div>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="reveal">
     <div class="wrap">
       <h2>Contact</h2>
-      <p>Email: <a href="zpashakhan94@gmail.com</a></p>
-      <p>LinkedIn: <a href="www.linkedin.com/in/zain-khan-6a7767333</a></p>
+      <p>Email: <a href="mailto:zpashakhan94@gmail.com">zpashakhan94@gmail.com</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/zain-khan-6a7767333">linkedin.com/in/zain-khan-6a7767333</a></p>
       <p>Resume: <a href="resume.pdf">Download my resume (PDF)</a></p>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap">&copy; 2026 Zain Khan</div>
-</footer>
+<footer><div class="wrap">&copy; 2026 Zain Khan</div></footer>
 
+<script>
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, reduce ? 0 : ms); }); };
+
+  // 1. Hero query types itself out, then the result table slides in
+  var lines = [
+    [['kw', 'SELECT'], ['', ' name, role, location']],
+    [['kw', 'FROM'], ['', '   me']],
+    [['kw', 'WHERE'], ['', '  status = '], ['str', "'open to opportunities'"], ['', ';']]
+  ];
+  async function typeHero() {
+    var out = document.getElementById('typed');
+    var cur = document.createElement('span');
+    cur.className = 'cursor';
+    out.appendChild(cur);
+    await sleep(500);
+    for (var l = 0; l < lines.length; l++) {
+      for (var s = 0; s < lines[l].length; s++) {
+        var seg = lines[l][s];
+        var el = document.createElement('span');
+        el.className = seg[0];
+        out.insertBefore(el, cur);
+        for (var c = 0; c < seg[1].length; c++) {
+          el.textContent += seg[1][c];
+          await sleep(35);
+        }
+      }
+      if (l < lines.length - 1) out.insertBefore(document.createTextNode('\n'), cur);
+    }
+    await sleep(350);
+    document.getElementById('heroResult').classList.add('show');
+  }
+  typeHero();
+
+  // 2. "Run query" buttons reveal result rows one by one
+  document.querySelectorAll('.run').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var out = btn.closest('.project').querySelector('.output');
+      out.classList.add('open');
+      out.querySelectorAll('tbody tr').forEach(function (tr, i) {
+        tr.classList.remove('in');
+        void tr.offsetWidth;
+        tr.style.animationDelay = (i * 130) + 'ms';
+        tr.classList.add('in');
+      });
+      btn.textContent = 'Run again';
+    });
+  });
+
+  // 3. Sections fade in as you scroll to them
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
 </body>
 </html>
