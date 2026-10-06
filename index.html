@@ -90,8 +90,10 @@
   nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
   nav ul a { color: var(--ink); text-decoration: none; font-size: .95rem; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .25s; padding-bottom: 2px; }
   nav ul a:hover { background-size: 100% 2px; }
-  .theme { background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: .3rem .75rem; font: 500 .85rem "IBM Plex Sans", sans-serif; cursor: pointer; transition: border-color .2s, color .2s; }
-  .theme:hover { border-color: var(--accent); color: var(--accent); }
+  .theme { display: inline-flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; padding: 0; background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 50%; cursor: pointer; transition: border-color .2s, color .2s, transform .3s; }
+  .theme:hover { border-color: var(--accent); color: var(--accent); transform: rotate(20deg); }
+  .theme svg { width: 18px; height: 18px; }
+  .theme [hidden] { display: none; }
 
   /* Hero: an editor window that types out the intro query */
   .hero { padding: 4rem 0 3rem; }
@@ -175,7 +177,10 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <button class="theme" id="themeBtn" type="button">Dark mode</button>
+      <button class="theme" id="themeBtn" type="button" aria-label="Switch to dark mode">
+        <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
     </div>
   </div>
 </nav>
@@ -312,7 +317,12 @@
     var t = root.getAttribute('data-theme');
     return t ? t === 'dark' : darkQuery.matches;
   }
-  function updateLabel() { themeBtn.textContent = isDark() ? 'Light mode' : 'Dark mode'; }
+  function updateLabel() {
+    var dark = isDark();
+    document.getElementById('iconSun').hidden = dark;
+    document.getElementById('iconMoon').hidden = !dark;
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
   themeBtn.addEventListener('click', function () {
     var next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
