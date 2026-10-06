@@ -161,6 +161,14 @@
   .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s, transform .6s; }
   .js .reveal.in { opacity: 1; transform: none; }
 
+  /* Smooth theme change: added briefly while switching, then removed.
+     The sun icon is left out so its own ray animation still plays. */
+  .theme-fade *:not(svg):not(svg *),
+  .theme-fade *:not(svg):not(svg *)::before,
+  .theme-fade *:not(svg):not(svg *)::after {
+    transition: background-color .55s ease-in-out, color .55s ease-in-out, border-color .55s ease-in-out, box-shadow .55s ease-in-out !important;
+  }
+
   @media (max-width: 600px) {
     .hero { padding-top: 2.5rem; }
     .project { padding: 1.1rem; }
@@ -337,6 +345,13 @@
   var root = document.documentElement;
   var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
   var themeBtn = document.getElementById('themeBtn');
+  var fadeTimer;
+  function fadeTheme() {
+    if (reduce) return;
+    root.classList.add('theme-fade');
+    clearTimeout(fadeTimer);
+    fadeTimer = setTimeout(function () { root.classList.remove('theme-fade'); }, 750);
+  }
   function isDark() {
     var t = root.getAttribute('data-theme');
     return t ? t === 'dark' : darkQuery.matches;
@@ -348,11 +363,12 @@
   }
   themeBtn.addEventListener('click', function () {
     var next = isDark() ? 'light' : 'dark';
+    fadeTheme();
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('theme', next); } catch (e) {}
     updateLabel();
   });
-  if (darkQuery.addEventListener) darkQuery.addEventListener('change', updateLabel);
+  if (darkQuery.addEventListener) darkQuery.addEventListener('change', function () { fadeTheme(); updateLabel(); });
   updateLabel();
 
   // 1. Hero query types itself out, then the result table slides in
