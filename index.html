@@ -363,10 +363,14 @@
   ];
   async function typeHero() {
     var out = document.getElementById('typed');
+    // If this ever runs twice, only the newest run is allowed to keep typing
+    var token = window.__heroRun = (window.__heroRun || 0) + 1;
+    out.textContent = '';
     var cur = document.createElement('span');
     cur.className = 'cursor';
     out.appendChild(cur);
     await sleep(500);
+    if (window.__heroRun !== token) return;
     for (var l = 0; l < lines.length; l++) {
       for (var s = 0; s < lines[l].length; s++) {
         var seg = lines[l][s];
@@ -376,6 +380,7 @@
         for (var c = 0; c < seg[1].length; c++) {
           el.textContent += seg[1][c];
           await sleep(35);
+          if (window.__heroRun !== token) return;
         }
       }
       if (l < lines.length - 1) out.insertBefore(document.createTextNode('\n'), cur);
