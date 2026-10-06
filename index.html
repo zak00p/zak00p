@@ -93,10 +93,14 @@
   .theme { display: inline-flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; padding: 0; background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 50%; cursor: pointer; transition: border-color .2s, color .2s, transform .3s; }
   .theme:hover { border-color: var(--accent); color: var(--accent); transform: rotate(20deg); }
   .theme svg { width: 18px; height: 18px; }
-  .theme .rays { transform-origin: 12px 12px; transition: opacity .35s, transform .45s; }
-  .theme .disc { transition: fill .35s; }
-  .theme[data-mode="dark"] .rays { opacity: 0; transform: scale(.4) rotate(-60deg); }
-  .theme[data-mode="dark"] .disc { fill: currentColor; }
+  .theme .rays { transform-origin: 12px 12px; transition: transform .8s cubic-bezier(.4, 0, .2, 1); }
+  .theme .rays line {
+    transform-origin: 12px 12px;
+    transition: transform .55s cubic-bezier(.4, 0, .2, 1), opacity .45s ease;
+    transition-delay: calc(var(--i) * 35ms);
+  }
+  .theme[data-mode="dark"] .rays { transform: rotate(45deg); }
+  .theme[data-mode="dark"] .rays line { transform: scale(.5); opacity: 0; }
 
   /* Hero: an editor window that types out the intro query */
   .hero { padding: 4rem 0 3rem; }
@@ -183,7 +187,16 @@
       <button class="theme" id="themeBtn" type="button" aria-label="Switch to dark mode">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle class="disc" cx="12" cy="12" r="4"/>
-          <g class="rays"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></g>
+          <g class="rays">
+            <line style="--i:0" x1="12" y1="2" x2="12" y2="4"/>
+            <line style="--i:1" x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+            <line style="--i:2" x1="20" y1="12" x2="22" y2="12"/>
+            <line style="--i:3" x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+            <line style="--i:4" x1="12" y1="20" x2="12" y2="22"/>
+            <line style="--i:5" x1="4.93" y1="19.07" x2="6.34" y2="17.66"/>
+            <line style="--i:6" x1="2" y1="12" x2="4" y2="12"/>
+            <line style="--i:7" x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>
+          </g>
         </svg>
       </button>
     </div>
