@@ -155,6 +155,11 @@
   .skills h3 { font-size: 1.05rem; }
   .skills p { margin: .3rem 0 0; color: var(--muted); font-size: .95rem; }
 
+  .contact-icons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+  .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 3.2rem; height: 3.2rem; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 50%; transition: transform .2s, border-color .2s, color .2s, box-shadow .2s; }
+  .icon-link:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-4px); box-shadow: 4px 4px 0 var(--accent-soft); }
+  .icon-link svg { width: 1.4rem; height: 1.4rem; }
+
   footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; }
 
   /* Scroll reveal (only when JS is running) */
@@ -328,9 +333,23 @@
   <section id="contact" class="reveal">
     <div class="wrap">
       <h2>Contact</h2>
-      <p>Email: <a href="mailto:contact@zpashakhan.com">contact@zpashakhan.com</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/zain-khan-6a7767333">linkedin.com/in/zain-khan-6a7767333</a></p>
-      <p>Resume: <a href="resume.pdf">Download my resume (PDF)</a></p>
+      <ul class="contact-icons">
+        <li>
+          <a class="icon-link" href="mailto:contact@zpashakhan.com" aria-label="Email: contact@zpashakhan.com" title="Email: contact@zpashakhan.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </li>
+        <li>
+          <a class="icon-link" href="https://www.linkedin.com/in/zain-khan-6a7767333" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </li>
+        <li>
+          <a class="icon-link" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume (PDF)" title="Resume (PDF)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 </main>
