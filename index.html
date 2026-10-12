@@ -88,6 +88,8 @@
   nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: var(--nav-bg); backdrop-filter: blur(6px); }
   nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: .9rem; padding-bottom: .9rem; flex-wrap: wrap; gap: .5rem; }
   nav strong { font-weight: 600; }
+  nav a.brand { color: inherit; text-decoration: none; }
+  nav a.brand:hover strong { color: var(--accent); }
   .nav-right { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
   nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
   nav ul a { color: var(--ink); text-decoration: none; font-size: .95rem; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .25s; padding-bottom: 2px; }
@@ -382,11 +384,11 @@
   @media (max-width: 600px) { .r2row { grid-template-columns: 5rem 1fr auto; } }
 </style>
 </head>
-<body>
+<body id="top">
 
 <nav>
   <div class="wrap">
-    <strong>Zain Khan</strong>
+    <a class="brand" href="#top"><strong>Zain Khan</strong></a>
     <div class="nav-right">
       <ul>
         <li><a href="#about">About</a></li>
