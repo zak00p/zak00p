@@ -444,6 +444,14 @@
       <p class="reveal">Select a project to see the full breakdown.</p>
 
       <div class="project-grid">
+      <article class="project summary reveal" data-open="d-ml">
+        <span class="cat-tag">Machine Learning</span>
+        <h3>Predicting Car Fuel Economy</h3>
+        <p class="meta">Dataset: Auto MPG &nbsp;|&nbsp; Tools: Python, scikit-learn</p>
+        <p class="blurb">Trained linear and polynomial regression models on 398 cars from the 1970s and 80s to predict miles per gallon. The polynomial model explained about 89% of the variation in fuel economy on cars it had never seen.</p>
+        <button class="more" type="button" aria-haspopup="dialog">View details <span aria-hidden="true">&rarr;</span></button>
+      </article>
+
       <article class="project summary reveal" data-open="d-sql1">
         <span class="cat-tag">SQL</span>
         <h3>Project title:</h3>
@@ -460,13 +468,6 @@
         <button class="more" type="button" aria-haspopup="dialog">View details <span aria-hidden="true">&rarr;</span></button>
       </article>
 
-      <article class="project summary reveal" data-open="d-ml">
-        <span class="cat-tag">Machine Learning</span>
-        <h3>Predicting Car Fuel Economy</h3>
-        <p class="meta">Dataset: Auto MPG &nbsp;|&nbsp; Tools: Python, scikit-learn</p>
-        <p class="blurb">Trained linear and polynomial regression models on 398 cars from the 1970s and 80s to predict miles per gallon. The polynomial model explained about 89% of the variation in fuel economy on cars it had never seen.</p>
-        <button class="more" type="button" aria-haspopup="dialog">View details <span aria-hidden="true">&rarr;</span></button>
-      </article>
       </div>
     </div>
   </section>
@@ -586,7 +587,7 @@
   <div class="project">
     <button class="detail-close" type="button" aria-label="Close details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <span class="cat-tag">Machine Learning</span>
-    <div class="top"><div><h3 id="d-ml-t">Predicting Car Fuel Economy</h3><p class="meta">Dataset: Auto MPG, 398 cars from 1970&ndash;82 &nbsp;|&nbsp; Tools: Python, pandas, scikit-learn, matplotlib</p></div></div>
+    <div class="top"><div><h3 id="d-ml-t">Predicting Car Fuel Economy</h3><p class="meta">Dataset: Auto MPG, 398 cars from 1970&ndash;82<br>Tools: Python, pandas, scikit-learn, matplotlib</p></div></div>
 
     <div class="ml-stats">
       <div class="stat"><b>0.892</b><span>test R&sup2;, polynomial model</span></div>
@@ -629,6 +630,7 @@
 
     <h4>What I learned</h4>
     <p>Fuel economy is driven by how big and powerful a vehicle is. Weight, displacement, horsepower, and cylinders were all negatively correlated with fuel economy, and letting the model curve got it about nine points of R&sup2; higher than a straight line. The data is small and outdated, so I don't expect it to be incredibly accurate for newer vehicles, considering the advancements made in technology and efficiency. There also aren't enough 3 and 5 cylinder cars for the model to learn much from.</p>
+    <p>I got a lot more comfortable with pandas and scikit-learn. pandas made the cleaning pretty easy, like turning the bad horsepower values into nulls with to_numeric and one hot encoding the brands with get_dummies. scikit-learn covered everything else, like SimpleImputer for the median, KMeans for the clusters, and a pipeline that scales the columns and adds the polynomial terms, so the exact same steps get applied to the test cars. The biggest thing I learned is to split the data before fitting anything and to score the model on cars it hasn't seen, since that is what shows whether it really works. I also refined my matplotlib skills.</p>
   </div>
 </dialog>
 
