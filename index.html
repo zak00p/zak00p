@@ -567,7 +567,7 @@
   <section id="about" class="reveal">
     <div class="wrap">
       <h2>About me</h2>
-      <p>I am a student at CU Boulder and this bio will be worked on soon lolol</p>
+      <p>I am a student at CU Boulder. This is a placeholder bio.</p>
     </div>
   </section>
 
@@ -657,7 +657,7 @@
     <ul class="er-notes">
       <li>Mounts have their own table, so a mount name only gets typed once and bodies and lenses can't end up with different spellings of the same mount.</li>
       <li>body_lens_compat is a join table, since one lens can fit many bodies and one body can take many lenses. Its primary key is both columns together, so a pair can't be listed twice.</li>
-      <li>CHECK constraints keep bad data out, like negative prices, a maximum focal length below the minimum, or a sensor size that isn't on the list.</li>
+      <li>CHECK constraints keep bad data out, like negative prices, a maximum focal length below the minimum, apertures that would not work, or a sensor size that isn't on the list.</li>
       <li>A review points at either a body or a lens, and a check makes sure exactly one of them is filled in.</li>
     </ul>
 
