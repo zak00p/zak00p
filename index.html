@@ -3,883 +3,298 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zain Khan | Portfolio</title>
+<title>Photography | Zain Khan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script>
-  document.documentElement.classList.add('js');
-  // Apply a saved theme choice before the page paints, so there is no flash
-  try {
-    var saved = localStorage.getItem('theme');
-    if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
-  } catch (e) {}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  /* Light theme (default) */
   :root {
-    color-scheme: light;
-    --paper: #f2f5f8;
-    --panel: #ffffff;
-    --nav-bg: rgba(255,255,255,.92);
-    --ink: #16222d;
-    --muted: #55677a;
-    --line: #d5dde6;
-    --th-bg: #eaf0f6;
-    --accent: #2456c9;
-    --accent-hover: #1b45a6;
-    --accent-soft: #c9d8f7;
-    --on-accent: #ffffff;
-    --code-bg: #14202c;
-    --code-bar: #1d2d3d;
-    --code-ink: #dbe7f3;
-    --kw: #7fb0ff;
-    --str: #9fe0b0;
-    --cmt: #7d93a8;
+    --wall: #f6f4ef;
+    --ink: #222019;
+    --muted: #7b766b;
+    --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
   }
-  /* Dark theme: follows the device unless the visitor picked light */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --paper: #0f1720;
-      --panel: #17222e;
-      --nav-bg: rgba(23,34,46,.92);
-      --ink: #e6edf4;
-      --muted: #9fb0c1;
-      --line: #2a3a4a;
-      --th-bg: #1e2c3b;
-      --accent: #7aa5ff;
-      --accent-hover: #9dbcff;
-      --accent-soft: #223a66;
-      --on-accent: #0b1420;
-      --code-bg: #0b121a;
-      --code-bar: #131f2c;
-    }
-  }
-  /* Dark theme: chosen with the toggle button */
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --paper: #0f1720;
-    --panel: #17222e;
-    --nav-bg: rgba(23,34,46,.92);
-    --ink: #e6edf4;
-    --muted: #9fb0c1;
-    --line: #2a3a4a;
-    --th-bg: #1e2c3b;
-    --accent: #7aa5ff;
-    --accent-hover: #9dbcff;
-    --accent-soft: #223a66;
-    --on-accent: #0b1420;
-    --code-bg: #0b121a;
-    --code-bar: #131f2c;
-  }
-
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; font-size: clamp(16px, 0.75rem + 0.45vw, 21px); }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.05rem/1.65 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; transition: background .3s, color .3s; }
-  a { color: var(--accent); }
-  a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-  .wrap { max-width: 1600px; margin: 0 auto; padding: 0 clamp(1.25rem, 5vw, 5rem); }
-  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.8rem; }
-  .project-grid .project { margin-bottom: 0; }
-  .kw { color: var(--kw); font-weight: 500; }
-  .str { color: var(--str); }
-  .cmt { color: var(--cmt); }
-
-  nav { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: var(--nav-bg); backdrop-filter: blur(6px); }
-  nav .wrap { display: flex; justify-content: space-between; align-items: center; padding-top: .9rem; padding-bottom: .9rem; flex-wrap: wrap; gap: .5rem; }
-  nav strong { font-weight: 600; }
-  nav a.brand { color: inherit; text-decoration: none; }
-  nav a.brand:hover strong { color: var(--accent); }
-  .nav-right { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
-  nav ul { display: flex; gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
-  nav ul a { color: var(--ink); text-decoration: none; font-size: .95rem; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 2px no-repeat; transition: background-size .25s; padding-bottom: 2px; }
-  nav ul a:hover { background-size: 100% 2px; }
-  .theme { display: inline-flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; padding: 0; background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 50%; cursor: pointer; transition: border-color .2s, color .2s, transform .3s; }
-  .theme:hover { border-color: var(--accent); color: var(--accent); transform: rotate(20deg); }
-  .theme svg { width: 18px; height: 18px; }
-  .theme .rays { transform-origin: 12px 12px; transition: transform .8s cubic-bezier(.4, 0, .2, 1); }
-  .theme .rays line {
-    transform-origin: 12px 12px;
-    transition: transform .55s cubic-bezier(.4, 0, .2, 1), opacity .45s ease;
-    transition-delay: calc(var(--i) * 35ms);
-  }
-  .theme[data-mode="dark"] .rays { transform: rotate(45deg); }
-  .theme[data-mode="dark"] .rays line { transform: scale(.5); opacity: 0; }
-
-  /* Hero: an editor window that types out the intro query */
-  .hero { padding: 4rem 0 3rem; min-height: calc(100vh - 3.6rem); min-height: calc(100svh - 3.6rem); display: flex; align-items: center; }
-  .hero .wrap { width: 100%; }
-  .editor { background: var(--code-bg); border-radius: 10px; box-shadow: 8px 8px 0 var(--accent-soft); overflow: hidden; }
-  .bar { background: var(--code-bar); padding: .6rem 1rem; display: flex; align-items: center; gap: .45rem; }
-  .bar i { width: 11px; height: 11px; border-radius: 50%; background: #3d5266; display: block; }
-  .bar span { margin-left: .6rem; color: var(--cmt); font: 400 .85rem "IBM Plex Mono", monospace; }
-  #typed { margin: 0; padding: 1.4rem 1.6rem; color: var(--code-ink); font: 400 1.05rem/1.8 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; min-height: 8.6rem; overflow-x: auto; }
-  .cursor { display: inline-block; width: .6ch; height: 1.1em; background: var(--kw); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .result { margin-top: 1.4rem; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .5s; }
-  .result.show { opacity: 1; transform: none; }
-  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
-  th, td { text-align: left; padding: .7rem 1.2rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { font: 500 .85rem "IBM Plex Mono", monospace; color: var(--muted); background: var(--th-bg); }
-  tr:last-child td { border-bottom: 0; }
-
-  .hero h1 { font-size: clamp(2.8rem, 8vw, 6.5rem); line-height: 1.05; margin: 0 0 .6rem; font-weight: 600; }
-  .hero p.lead { color: var(--muted); max-width: 60ch; margin: 0 0 2rem; font-size: clamp(1rem, 2vw, 1.2rem); }
-
-  section { padding: 3rem 0; border-top: 1px solid var(--line); }
-  h2 { font-size: 1.7rem; margin: 0 0 1.2rem; font-weight: 600; }
-  h3 { font-size: 1.25rem; margin: 0; font-weight: 600; }
-  p { max-width: 68ch; }
-
-  .project { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.6rem; margin-bottom: 1.8rem; transition: border-color .2s, box-shadow .2s, background .3s; }
-  .project:hover { border-color: var(--accent); box-shadow: 6px 6px 0 var(--accent-soft); }
-  .project .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
-  .meta { color: var(--muted); font-size: .95rem; margin: .3rem 0 1rem; }
-  .project h4 { margin: 1.4rem 0 .4rem; font-size: 1rem; font-weight: 600; }
-  .project pre { margin: 0; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; padding: 1.1rem 1.2rem; overflow-x: auto; font: 400 .92rem/1.65 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
-  .project ol { margin: 0; padding-left: 1.3rem; max-width: 68ch; }
-  .project li { margin-bottom: .35rem; }
-
-  .run { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent); color: var(--on-accent); border: 0; border-radius: 6px; padding: .55rem 1rem; font: 500 .9rem "IBM Plex Sans", sans-serif; cursor: pointer; transition: transform .15s, background .15s; }
-  .run:hover { background: var(--accent-hover); transform: translateY(-1px); }
-  .run:active { transform: translateY(1px); }
-  .run::before { content: ""; border-left: 9px solid var(--on-accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
-  .output { display: none; margin-top: .8rem; border: 1px solid var(--line); border-radius: 6px; overflow-x: auto; }
-  .output.open { display: block; }
-  .output tbody tr { opacity: 0; }
-  .output tbody tr.in { animation: rowIn .45s ease forwards; }
-  @keyframes rowIn { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
-
-  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-  .skills div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.3rem; transition: transform .2s, border-color .2s, background .3s; }
-  .skills div:hover { transform: translateY(-4px); border-color: var(--accent); }
-  .skills h3 { font-size: 1.05rem; }
-  .skills p { margin: .3rem 0 0; color: var(--muted); font-size: .95rem; }
-
-  .contact-icons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0; padding: 0; list-style: none; }
-  .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 3.2rem; height: 3.2rem; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 50%; transition: transform .2s, border-color .2s, color .2s, box-shadow .2s; }
-  .icon-link:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-4px); box-shadow: 4px 4px 0 var(--accent-soft); }
-  .icon-link svg { width: 1.4rem; height: 1.4rem; }
-
-  footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .95rem; }
-
-  /* Scroll reveal (only when JS is running) */
-  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s, transform .6s; }
-  .js .reveal.in { opacity: 1; transform: none; }
-
-  /* Smooth theme change: added briefly while switching, then removed.
-     The sun icon is left out so its own ray animation still plays. */
-  .theme-fade *:not(svg):not(svg *),
-  .theme-fade *:not(svg):not(svg *)::before,
-  .theme-fade *:not(svg):not(svg *)::after {
-    transition: background-color .55s ease-in-out, color .55s ease-in-out, border-color .55s ease-in-out, box-shadow .55s ease-in-out, opacity .55s ease-in-out !important;
-  }
-
-
-  /* ===== Project summary cards and the detail view ===== */
-  .cat-tag { display: inline-block; font: 500 .78rem "IBM Plex Mono", ui-monospace, monospace; color: var(--accent); border: 1px solid currentColor; border-radius: 999px; padding: .1rem .65rem; margin-bottom: .7rem; }
-  .project.summary { display: flex; flex-direction: column; cursor: pointer; }
-  .project.summary .cat-tag { align-self: flex-start; }
-  .project.summary .meta { margin: .3rem 0 .8rem; }
-  .project.summary .blurb { margin: 0; }
-  .more { margin-top: auto; padding: 1.2rem 0 0; align-self: flex-start; background: none; border: 0; color: var(--accent); font: 500 .95rem "IBM Plex Sans", sans-serif; cursor: pointer; }
-  .more span { display: inline-block; transition: transform .2s; }
-  .summary:hover .more span, .more:focus-visible span { transform: translateX(5px); }
-
-  dialog.detail { width: min(56rem, calc(100vw - 1.5rem)); max-height: calc(100vh - 1.5rem); max-height: calc(100dvh - 1.5rem); padding: 0; border: 0; background: transparent; color: var(--ink); overflow: auto; border-radius: 24px; }
-  dialog.detail[open] { animation: detailIn .35s cubic-bezier(.2, .8, .2, 1); }
-  dialog.detail::backdrop { background: rgba(10, 16, 30, .4); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-  dialog.detail[open]::backdrop { animation: fadeIn .3s ease; }
-  dialog.detail .project { position: relative; margin: 0; }
-  dialog.detail .project:hover { box-shadow: none; }
-  dialog.detail .top { padding-right: 3rem; }
-  .detail-close { position: absolute; top: 1rem; right: 1rem; width: 2.2rem; height: 2.2rem; display: grid; place-items: center; padding: 0; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: color .2s, border-color .2s, transform .2s; }
-  .detail-close:hover { color: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
-  .detail-close svg { width: 16px; height: 16px; }
-  html:has(dialog[open]) { overflow: hidden; }
-  @keyframes detailIn { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-  /* ===== Liquid glass layer ===== */
-  :root {
-    --paper: #e9eefb;
-    --glass: rgba(255,255,255,.42);
-    --glass-strong: rgba(255,255,255,.62);
-    --glass-edge: rgba(255,255,255,.8);
-    --glass-line: rgba(255,255,255,.6);
-    --sheen: rgba(255,255,255,.5);
-    --glass-th: rgba(255,255,255,.35);
-    --glass-shadow: 0 10px 36px rgba(40,60,120,.14);
-    --glass-shadow-hover: 0 18px 50px rgba(40,60,120,.22);
-    --line: rgba(40,60,100,.14);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #070b14;
-      --glass: rgba(255,255,255,.07);
-      --glass-strong: rgba(255,255,255,.13);
-      --glass-edge: rgba(255,255,255,.28);
-      --glass-line: rgba(255,255,255,.16);
-      --sheen: rgba(255,255,255,.12);
-      --glass-th: rgba(255,255,255,.06);
-      --glass-shadow: 0 12px 40px rgba(0,0,0,.45);
-      --glass-shadow-hover: 0 20px 56px rgba(0,0,0,.55);
-      --line: rgba(255,255,255,.12);
-    }
-  }
-  :root[data-theme="dark"] {
-    --paper: #070b14;
-    --glass: rgba(255,255,255,.07);
-    --glass-strong: rgba(255,255,255,.13);
-    --glass-edge: rgba(255,255,255,.28);
-    --glass-line: rgba(255,255,255,.16);
-    --sheen: rgba(255,255,255,.12);
-    --glass-th: rgba(255,255,255,.06);
-    --glass-shadow: 0 12px 40px rgba(0,0,0,.45);
-    --glass-shadow-hover: 0 20px 56px rgba(0,0,0,.55);
-    --line: rgba(255,255,255,.12);
-  }
-
-  /* Colourful, slowly drifting light behind the glass. One layer per theme so they can cross-fade. */
-  body::before, body::after {
-    content: ""; position: fixed; inset: -25%; z-index: -1; pointer-events: none;
-    transition: opacity .55s ease-in-out;
-    animation: drift 40s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-  body::before {
+  body {
+    margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--sans); font-weight: 300; overflow-x: hidden;
     background:
-      radial-gradient(40% 35% at 20% 25%, rgba(96,150,255,.55), transparent 70%),
-      radial-gradient(35% 40% at 80% 20%, rgba(180,140,255,.45), transparent 70%),
-      radial-gradient(40% 40% at 70% 80%, rgba(90,220,200,.40), transparent 70%),
-      radial-gradient(35% 35% at 15% 85%, rgba(255,190,150,.40), transparent 70%);
+      radial-gradient(ellipse 90% 40rem at 50% -6rem, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+      var(--wall);
   }
-  body::after {
-    opacity: 0;
-    background:
-      radial-gradient(40% 35% at 20% 25%, rgba(46,100,235,.55), transparent 70%),
-      radial-gradient(35% 40% at 80% 20%, rgba(130,80,230,.45), transparent 70%),
-      radial-gradient(40% 40% at 70% 80%, rgba(20,150,160,.38), transparent 70%),
-      radial-gradient(35% 35% at 15% 85%, rgba(200,90,120,.28), transparent 70%);
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.25rem, 5vw, 4rem); }
+
+  /* Opening wall text */
+  .intro { text-align: center; padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(3rem, 8vw, 6rem); }
+  .intro .eyebrow { margin: 0 0 1.4rem; font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+  .intro h1 { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(3rem, 9vw, 6.5rem); line-height: 1; letter-spacing: .01em; }
+  .intro .rule-unused { width: 3rem; height: 1px; background: var(--ink); opacity: .5; margin: 2rem auto 1.6rem; }
+  .intro .statement { margin: 0 auto; max-width: 34ch; font-family: var(--serif); font-style: italic; font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.5; color: var(--muted); }
+
+  .intro { padding-bottom: clamp(1.8rem, 4vw, 3rem); }
+  .about { max-width: 40rem; margin: 0 auto; padding: clamp(3rem, 7vw, 5rem) 0 clamp(4rem, 9vw, 6.5rem); text-align: center; border-top: 1px solid rgba(34,32,25,.15); }
+  .about h2 { margin: 0 0 1.1rem; font-family: var(--sans); font-weight: 400; font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+  .about p { margin: 0; font-family: var(--serif); font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.6; color: var(--ink); }
+  .intro .bar { position: relative; width: min(18rem, 64vw); height: 1px; margin: clamp(1.8rem, 4vw, 2.6rem) auto 0; }
+  .intro .bar::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(34,32,25,.6) 30%, rgba(34,32,25,.6) 70%, transparent); }
+  .tabs { display: flex; justify-content: center; gap: .4rem clamp(1.25rem, 4.5vw, 3.25rem); flex-wrap: wrap; padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+  .tab { appearance: none; background: none; border: 0; padding: .4rem 0; cursor: pointer; font-family: var(--serif); font-size: clamp(1.15rem, 2.6vw, 1.45rem); font-style: italic; color: var(--muted);
+    background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 50% 100%; background-size: 0 1px; transition: color .3s, background-size .35s ease; }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--ink); background-size: 100% 1px; }
+  .tab:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+  .gallery[hidden] { display: none; }
+  .gallery { animation: hang .6s ease both; outline: none; }
+  @keyframes hang { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* The hang: everything shares one eye line */
+  .gallery { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(1.5rem, 4vw, 4rem); row-gap: clamp(4rem, 10vw, 8rem); align-items: center; padding-bottom: clamp(3rem, 8vw, 6rem); }
+  .exhibit { margin: 0; }
+  .frame { box-shadow: 0 2px 4px rgba(30,25,15,.10), 0 14px 30px -12px rgba(30,25,15,.28); transition: box-shadow .5s ease, transform .5s ease; }
+  .exhibit:hover .frame { transform: translateY(-3px); box-shadow: 0 1px 1px rgba(30,25,15,.12), 0 16px 30px -8px rgba(30,25,15,.26), 0 40px 64px -24px rgba(30,25,15,.28); }
+  .photo { display: block; width: 100%; aspect-ratio: var(--ar, 4/5); object-fit: cover; }
+  img.photo { height: auto; }
+  .ph { display: grid; place-items: center; color: rgba(255,255,255,.55); background: linear-gradient(165deg, #cfcbc2, #aaa59a); }
+  .ph svg { width: 2.6rem; height: 2.6rem; }
+
+  .frame { cursor: zoom-in; }
+  .frame:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+
+  /* Lightbox */
+  dialog.lb { border: 0; padding: 0; margin: 0; max-width: none; max-height: none; width: 100vw; height: 100vh; height: 100dvh; background: transparent; color: #f3f0e9; overflow: hidden; }
+  dialog.lb::backdrop { background: rgba(14,12,8,.88); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  dialog.lb[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; animation: lbIn .3s ease both; }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+  .lb-stage { display: block; }
+  .lb-stage > * { display: block; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .lb-stage > .ph { display: grid; }
+  .lb-stage > * { max-width: none; }
+  .lb-stage img { aspect-ratio: auto; object-fit: contain; }
+  .lb-cap { margin-top: 1.1rem; text-align: center; display: flex; flex-direction: column; gap: .1rem; }
+  .lb-cap .t { font-size: 1.25rem; color: #f3f0e9; }
+  .lb-cap .m { color: #b9b3a6; }
+  .lb-cap .y { color: #b9b3a6; }
+  .lb-btn { position: absolute; background: none; border: 0; color: #f3f0e9; cursor: pointer; font-family: var(--serif); line-height: 1; opacity: .7; transition: opacity .2s; padding: .6rem .9rem; }
+  .lb-btn:hover, .lb-btn:focus-visible { opacity: 1; outline: none; }
+  .lb-close { top: 1rem; right: 1.2rem; font-size: 2.6rem; }
+  .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 3rem; }
+  .lb-prev { left: .6rem; } .lb-next { right: .6rem; }
+  @media (max-width: 48rem) { .lb-prev, .lb-next { top: auto; bottom: 1rem; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { dialog.lb[open] { animation: none; } }
+
+  /* Wall label */
+  figcaption { display: flex; flex-direction: column; gap: .15rem; margin-top: 1.1rem; padding-left: .2rem; }
+  .t { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; line-height: 1.2; }
+  .m { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--muted); line-height: 1.3; }
+  .y { font-size: .78rem; letter-spacing: .12em; color: var(--muted); }
+
+  .e1 { grid-column: 2 / span 4; }
+  .e2 { grid-column: 8 / span 4; }
+  .e3 { grid-column: 3 / span 8; }
+  .e4 { grid-column: 1 / span 5; }
+  .e5 { grid-column: 8 / span 5; }
+  .e6 { grid-column: 2 / span 10; }
+
+  footer { text-align: center; padding: 0 0 3.5rem; font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+
+  @media (max-width: 48rem) {
+    .gallery { grid-template-columns: 1fr; row-gap: 4rem; }
+    .exhibit { grid-column: 1 / -1 !important; }
+    .e1, .e2, .e4, .e5 { width: min(100%, 24rem); justify-self: center; }
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) body::before { opacity: 0; }
-    :root:not([data-theme="light"]) body::after { opacity: 1; }
-  }
-  :root[data-theme="dark"] body::before { opacity: 0; }
-  :root[data-theme="dark"] body::after { opacity: 1; }
-  @keyframes drift {
-    from { transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1); }
-    to   { transform: translate3d(3%, 3%, 0) rotate(8deg) scale(1.08); }
-  }
-
-  /* The glass itself: translucent, blurred, bright rim on top, soft shadow */
-  nav, .result, .project, .skills div, .icon-link, .theme {
-    background: linear-gradient(135deg, var(--sheen), transparent 45%), var(--glass);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid var(--glass-line);
-    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(255,255,255,.08);
-  }
-
-  /* Floating pill navigation */
-  nav { top: .75rem; margin: .75rem clamp(.75rem, 3vw, 2.5rem) 0; border-radius: 999px; }
-  nav .wrap { max-width: none; padding: .6rem 1.5rem; }
-
-  .theme:hover, .icon-link:hover { background: linear-gradient(135deg, var(--sheen), transparent 45%), var(--glass-strong); color: var(--accent); border-color: var(--glass-edge); box-shadow: var(--glass-shadow-hover), inset 0 1px 0 var(--glass-edge); }
-
-  /* Dark glass code window with real macOS traffic lights */
-  .editor {
-    background: linear-gradient(135deg, rgba(255,255,255,.10), transparent 40%), rgba(10,18,30,.84);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255,255,255,.22);
-    border-radius: 22px;
-    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,.3);
-  }
-  .bar { background: rgba(255,255,255,.06); padding: .75rem 1.1rem; }
-  .bar i:nth-child(1) { background: #ff5f57; }
-  .bar i:nth-child(2) { background: #febc2e; }
-  .bar i:nth-child(3) { background: #28c840; }
-
-  .result { border-radius: 18px; margin-top: 1.6rem; }
-  th { background: var(--glass-th); }
-  .output { background: var(--glass-th); border: 1px solid var(--glass-line); border-radius: 12px; }
-
-  .project { border-radius: 24px; padding: 1.8rem; }
-  .project:hover { border-color: var(--glass-edge); box-shadow: var(--glass-shadow-hover), inset 0 1px 0 var(--glass-edge); }
-  .project pre { background: rgba(10,18,30,.88); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; }
-  .skills div { border-radius: 20px; }
-  .skills div:hover { border-color: var(--glass-edge); box-shadow: var(--glass-shadow-hover), inset 0 1px 0 var(--glass-edge); }
-
-  .run { border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0) 60%), var(--accent); box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 6px 18px rgba(36,86,201,.35); }
-  .run:hover { background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 60%), var(--accent-hover); }
-
-  section { border-top: 0; }
-  footer { border-top: 1px solid var(--glass-line); }
-
-  @media (max-width: 600px) {
-    nav { border-radius: 24px; }
-    nav .wrap { padding: .6rem 1rem; }
-    .project { padding: 1.2rem; }
-  }
-
-  @media (max-width: 600px) {
-    .hero { padding-top: 2.5rem; }
-    .project { padding: 1.1rem; }
-    th, td { padding: .6rem .8rem; }
-    #typed { font-size: .9rem; padding: 1.1rem; }
-    .nav-right { gap: .9rem; }
-    nav ul { gap: .9rem; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-    .js .reveal, .result, .output tbody tr { opacity: 1; transform: none; }
-  }
-
-  /* ===== Machine learning project page ===== */
-  :root { --warm: #d9622b; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --warm: #ff9b62; } }
-  :root[data-theme="dark"] { --warm: #ff9b62; }
-
-  .ml-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: .8rem; margin: 1.2rem 0 .4rem; }
-  .stat { border-radius: 18px; padding: .9rem 1.1rem; background: var(--glass-th); border: 1px solid var(--glass-line); }
-  .stat b { display: block; font: 600 1.8rem/1.1 "IBM Plex Mono", ui-monospace, monospace; color: var(--accent); }
-  .stat span { color: var(--muted); font-size: .85rem; }
-  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: 1rem; margin-top: 1rem; }
-  .fig { margin: 1rem 0 .2rem; padding: .9rem; border-radius: 18px; background: var(--glass-th); border: 1px solid var(--glass-line); min-width: 0; }
-  .figs .fig { margin: 0; }
-  .fig.solo { max-width: 30rem; margin-left: auto; margin-right: auto; }
-  .fig svg { display: block; width: 100%; height: auto; }
-  .cap { color: var(--muted); font-size: .85rem; line-height: 1.45; margin: .6rem .2rem 0; max-width: none; }
-  .fig svg text { fill: var(--muted); font: 400 11px "IBM Plex Sans", sans-serif; }
-  .fig svg text.lab { font-size: 11.5px; fill: var(--ink); opacity: .8; }
-  .fig svg text.note { fill: var(--warm); font-weight: 600; }
-  .fig svg .ax { stroke: var(--muted); stroke-opacity: .55; }
-  .fig svg .gr { stroke: var(--muted); stroke-opacity: .16; }
-  .fig svg .bar { fill: var(--accent); fill-opacity: .8; }
-  .fig svg .line { fill: none; stroke: var(--accent); stroke-width: 2; }
-  .fig svg .diag { stroke: var(--warm); stroke-width: 2; stroke-dasharray: 5 4; }
-  .fig svg .pt1 { fill: var(--accent); }
-  .fig svg .pt2 { fill: var(--warm); }
-  .fig svg .dot { fill-opacity: .72; }
-  .key { display: inline-block; width: .7rem; height: .7rem; border-radius: 50%; margin-right: .35rem; vertical-align: -1px; }
-  .key.k1 { background: var(--accent); }
-  .key.k2 { background: var(--warm); }
-  .hmwrap { overflow-x: auto; }
-  table.hm { width: 100%; min-width: 24rem; border-collapse: separate; border-spacing: 3px; font: 400 .74rem "IBM Plex Mono", ui-monospace, monospace; }
-  table.hm th, table.hm td { padding: .5rem .2rem; text-align: center; border: 0; border-radius: 6px; }
-  table.hm th { background: transparent; color: var(--muted); font-size: .68rem; font-weight: 500; }
-  table.hm td { color: var(--ink); }
-  .r2 { display: grid; gap: .7rem; margin: 1rem 0; }
-  .r2row { display: grid; grid-template-columns: 6.2rem 1fr auto; align-items: center; gap: .3rem .8rem; }
-  .r2row span { font-weight: 500; }
-  .r2row b { font: 600 1rem "IBM Plex Mono", ui-monospace, monospace; }
-  .r2row em { grid-column: 2 / 4; margin-top: -.3rem; color: var(--muted); font-size: .8rem; font-style: normal; }
-  .track { height: .85rem; border-radius: 999px; background: var(--glass-th); border: 1px solid var(--glass-line); overflow: hidden; }
-  .track i { display: block; height: 100%; border-radius: 999px; }
-  .track i.b1 { background: var(--accent); opacity: .7; }
-  .track i.b2 { background: var(--warm); }
-  @media (max-width: 600px) { .r2row { grid-template-columns: 5rem 1fr auto; } }
-
-  .erscroll { overflow-x: auto; margin-top: .6rem; padding-bottom: .3rem; }
-  svg.er { display: block; width: 100%; min-width: 46rem; height: auto; overflow: visible; }
-  .ercap { margin: .5rem 0 0; }
-  .er-hint { display: none; }
-  @media (max-width: 44rem) { .er-hint { display: inline; } }
-  svg.er text { font-family: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; }
-  svg.er .er-card { fill: var(--panel); fill-opacity: .55; stroke: var(--glass-line); stroke-width: 1.2; }
-  svg.er .er-t { filter: drop-shadow(0 6px 14px rgba(20, 40, 80, .14)); outline: none; transition: opacity .2s; }
-  svg.er .er-head { fill: var(--accent-soft); fill-opacity: .85; }
-  svg.er .er-name { fill: var(--ink); font-size: 15px; font-weight: 600; }
-  svg.er .er-col { fill: var(--ink); font-size: 14px; }
-  svg.er .er-pk { font-weight: 600; }
-  svg.er .er-type { fill: var(--muted); font-size: 12.5px; }
-  svg.er .er-sep { stroke: var(--line); stroke-opacity: .7; }
-  svg.er .er-badge { fill: none; stroke: var(--accent); stroke-width: 1.3; }
-  svg.er .er-btxt { fill: var(--accent); font-size: 10px; font-weight: 600; letter-spacing: .04em; }
-  svg.er .er-rel, svg.er .er-crow { fill: none; stroke: var(--accent); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-  svg.er .er-one { fill: var(--panel); stroke: var(--accent); stroke-width: 1.9; }
-  svg.er .er-c { opacity: .55; transition: opacity .2s; }
-  svg.er.on .er-c { opacity: .12; }
-  svg.er.on .er-c.hit { opacity: 1; }
-  svg.er.on .er-t { opacity: .45; }
-  svg.er.on .er-t.hit { opacity: 1; }
-  ul.er-notes { margin: 0; padding-left: 1.3rem; max-width: 68ch; }
-  ul.er-notes li { margin-bottom: .45rem; }
-
-  /* ml-anim: chart animations in the machine learning tab */
-  @keyframes mlBar { from { transform: scaleY(0); } }
-  @keyframes mlBarX { from { transform: scaleX(0); } }
-  @keyframes mlDraw { from { stroke-dashoffset: 1; } }
-  @keyframes mlPop { from { opacity: 0; transform: scale(.2); } }
-  @keyframes mlFade { from { opacity: 0; } }
-  @keyframes mlRise { from { opacity: 0; transform: translateY(12px); } }
-  @keyframes mlCell { from { opacity: 0; transform: scale(.6); } }
-  .fig svg .bar, .fig svg .dot, .fig svg .pt1, .fig svg .pt2 { transform-box: fill-box; transform-origin: center; }
-  .fig svg .bar { transform-origin: bottom; transition: transform .2s ease, fill-opacity .2s ease; }
-  .fig svg .bar:hover { transform: scaleY(1.04); fill-opacity: 1; }
-  .fig svg .dot, .fig svg circle.pt1, .fig svg circle.pt2 { transition: transform .15s ease, fill-opacity .15s ease; }
-  .fig svg .dot:hover { transform: scale(2); fill-opacity: 1; }
-  .fig svg circle:not(.dot):hover { transform: scale(1.6); }
-  .fig, .stat { transition: transform .25s ease, box-shadow .25s ease; }
-  .fig:hover, .stat:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(20, 40, 80, .14); }
-  table.hm td { transition: transform .15s ease, box-shadow .15s ease; }
-  table.hm td:hover { transform: scale(1.12); box-shadow: 0 4px 12px rgba(20, 40, 80, .25); position: relative; z-index: 1; }
-  .track i { transition: filter .2s ease; transform-origin: left; }
-  .track:hover i { filter: brightness(1.12) saturate(1.2); }
-  /* hidden start state (set by script) */
-  .anim:not(.play) svg .bar { transform: scaleY(0); }
-  .anim:not(.play) svg .line { stroke-dasharray: 1; stroke-dashoffset: 1; }
-  .anim:not(.play) svg .dot, .anim:not(.play) svg circle.pt1:not(.dot), .anim:not(.play) svg .diag { opacity: 0; }
-  .anim:not(.play) table.hm td { opacity: 0; }
-  .anim:not(.play) .track i { transform: scaleX(0); }
-  .anim.ml-stats:not(.play) .stat { opacity: 0; }
-  /* play */
-  .anim.play svg .bar { animation: mlBar .7s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(var(--k, 0) * 45ms); }
-  .anim.play svg .line { stroke-dasharray: 1; animation: mlDraw 1.1s ease-out backwards; }
-  .anim.play svg .dot { animation: mlPop .45s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(var(--k, 0) * 18ms); }
-  .anim.play svg circle.pt1:not(.dot) { animation: mlPop .4s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(.7s + var(--k, 0) * 80ms); }
-  .anim.play svg .diag { animation: mlFade .6s ease backwards; animation-delay: .5s; }
-  .anim.play table.hm td { animation: mlCell .4s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: calc(var(--r, 0) * 55ms + var(--c, 0) * 25ms); }
-  .anim.play .track i { animation: mlBarX .9s cubic-bezier(.2, .8, .2, 1) backwards; animation-delay: .15s; }
-  .anim.ml-stats.play .stat { animation: mlRise .5s ease backwards; animation-delay: calc(var(--k, 0) * 90ms); }
-
-  .fig svg rect.bar:nth-of-type(1) { --k: 0; }
-  .fig svg rect.bar:nth-of-type(2) { --k: 1; }
-  .fig svg rect.bar:nth-of-type(3) { --k: 2; }
-  .fig svg rect.bar:nth-of-type(4) { --k: 3; }
-  .fig svg rect.bar:nth-of-type(5) { --k: 4; }
-  .fig svg rect.bar:nth-of-type(6) { --k: 5; }
-  .fig svg rect.bar:nth-of-type(7) { --k: 6; }
-  .fig svg rect.bar:nth-of-type(8) { --k: 7; }
-  .fig svg rect.bar:nth-of-type(9) { --k: 8; }
-  .fig svg rect.bar:nth-of-type(10) { --k: 9; }
-  .fig svg rect.bar:nth-of-type(11) { --k: 10; }
-  .fig svg rect.bar:nth-of-type(12) { --k: 11; }
-  .fig svg rect.bar:nth-of-type(13) { --k: 12; }
-  .fig svg .dot:nth-of-type(24n+1) { --k: 0; }
-  .fig svg .dot:nth-of-type(24n+2) { --k: 1; }
-  .fig svg .dot:nth-of-type(24n+3) { --k: 2; }
-  .fig svg .dot:nth-of-type(24n+4) { --k: 3; }
-  .fig svg .dot:nth-of-type(24n+5) { --k: 4; }
-  .fig svg .dot:nth-of-type(24n+6) { --k: 5; }
-  .fig svg .dot:nth-of-type(24n+7) { --k: 6; }
-  .fig svg .dot:nth-of-type(24n+8) { --k: 7; }
-  .fig svg .dot:nth-of-type(24n+9) { --k: 8; }
-  .fig svg .dot:nth-of-type(24n+10) { --k: 9; }
-  .fig svg .dot:nth-of-type(24n+11) { --k: 10; }
-  .fig svg .dot:nth-of-type(24n+12) { --k: 11; }
-  .fig svg .dot:nth-of-type(24n+13) { --k: 12; }
-  .fig svg .dot:nth-of-type(24n+14) { --k: 13; }
-  .fig svg .dot:nth-of-type(24n+15) { --k: 14; }
-  .fig svg .dot:nth-of-type(24n+16) { --k: 15; }
-  .fig svg .dot:nth-of-type(24n+17) { --k: 16; }
-  .fig svg .dot:nth-of-type(24n+18) { --k: 17; }
-  .fig svg .dot:nth-of-type(24n+19) { --k: 18; }
-  .fig svg .dot:nth-of-type(24n+20) { --k: 19; }
-  .fig svg .dot:nth-of-type(24n+21) { --k: 20; }
-  .fig svg .dot:nth-of-type(24n+22) { --k: 21; }
-  .fig svg .dot:nth-of-type(24n+23) { --k: 22; }
-  .fig svg .dot:nth-of-type(24n+24) { --k: 23; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(1) { --k: 0; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(2) { --k: 1; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(3) { --k: 2; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(4) { --k: 3; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(5) { --k: 4; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(6) { --k: 5; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(7) { --k: 6; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(8) { --k: 7; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(9) { --k: 8; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(10) { --k: 9; }
-  .fig svg circle.pt1:not(.dot):nth-of-type(11) { --k: 10; }
-  table.hm tr:nth-child(1) { --r: 0; }
-  table.hm tr > *:nth-child(1) { --c: 0; }
-  table.hm tr:nth-child(2) { --r: 1; }
-  table.hm tr > *:nth-child(2) { --c: 1; }
-  table.hm tr:nth-child(3) { --r: 2; }
-  table.hm tr > *:nth-child(3) { --c: 2; }
-  table.hm tr:nth-child(4) { --r: 3; }
-  table.hm tr > *:nth-child(4) { --c: 3; }
-  table.hm tr:nth-child(5) { --r: 4; }
-  table.hm tr > *:nth-child(5) { --c: 4; }
-  table.hm tr:nth-child(6) { --r: 5; }
-  table.hm tr > *:nth-child(6) { --c: 5; }
-  table.hm tr:nth-child(7) { --r: 6; }
-  table.hm tr > *:nth-child(7) { --c: 6; }
-  table.hm tr:nth-child(8) { --r: 7; }
-  table.hm tr > *:nth-child(8) { --c: 7; }
-  .ml-stats .stat:nth-child(1) { --k: 0; }
-  .ml-stats .stat:nth-child(2) { --k: 1; }
-  .ml-stats .stat:nth-child(3) { --k: 2; }
-  .runrow { margin: .8rem 0 0; }
-  #d-sql1 .output th, #d-sql1 .output td { white-space: nowrap; }
-  .foot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: .4rem 1.5rem; }
-  .foot-l { justify-self: start; }
-  .ai-note { justify-self: end; }
-  .foot-c { justify-self: center; font-size: .78rem; color: inherit; text-decoration: none; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 1px no-repeat; transition: color .2s, background-size .25s; padding-bottom: 2px; }
-  .foot-c:hover, .foot-c:focus-visible { color: var(--accent); background-size: 100% 1px; outline: none; }
-  .ai-note { position: relative; font-size: .78rem; text-decoration: underline; text-underline-offset: 3px; cursor: help; outline: none; }
-  .ai-tip { position: absolute; right: 0; bottom: calc(100% + .6rem); width: max-content; max-width: min(18rem, 80vw); padding: .6rem .85rem; border-radius: 12px; font-size: .85rem; line-height: 1.4; text-decoration: none; text-align: left; color: var(--ink); background: var(--panel); border: 1px solid var(--glass-line); box-shadow: 0 8px 28px rgba(20,30,60,.18); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .18s ease, transform .18s ease, visibility .18s; pointer-events: none; z-index: 5; }
-  .ai-note:hover .ai-tip, .ai-note:focus .ai-tip, .ai-note:focus-visible .ai-tip { opacity: 1; visibility: visible; transform: none; }
-  @media (max-width: 40rem) { .foot { grid-template-columns: 1fr; justify-items: start; } .foot-c, .ai-note { justify-self: start; } .ai-tip { right: auto; left: 0; } }
+  @media (prefers-reduced-motion: reduce) { .gallery { animation: none; } .tab { transition: none; } .frame { transition: none; } .exhibit:hover .frame { transform: none; } }
 </style>
 </head>
-<body id="top">
+<body>
 
-<nav>
-  <div class="wrap">
-    <a class="brand" href="#top"><strong>Zain Khan</strong></a>
-    <div class="nav-right">
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="theme" id="themeBtn" type="button" aria-label="Switch to dark mode">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle class="disc" cx="12" cy="12" r="4"/>
-          <g class="rays">
-            <line style="--i:0" x1="12" y1="2" x2="12" y2="4"/>
-            <line style="--i:1" x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
-            <line style="--i:2" x1="20" y1="12" x2="22" y2="12"/>
-            <line style="--i:3" x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
-            <line style="--i:4" x1="12" y1="20" x2="12" y2="22"/>
-            <line style="--i:5" x1="4.93" y1="19.07" x2="6.34" y2="17.66"/>
-            <line style="--i:6" x1="2" y1="12" x2="4" y2="12"/>
-            <line style="--i:7" x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>
-          </g>
-        </svg>
-      </button>
-    </div>
+<div class="wrap">
+  <header class="intro">
+    <p class="eyebrow">Zain Khan</p>
+    <h1>Photography</h1>
+    <div class="bar" aria-hidden="true"></div>
+      </header>
+
+  <div class="tabs" role="tablist" aria-label="Photography categories">
+    <button class="tab" role="tab" id="tab-people" aria-controls="panel-people" aria-selected="true" data-tab="people">People</button>
+    <button class="tab" role="tab" id="tab-environments" aria-controls="panel-environments" aria-selected="false" tabindex="-1" data-tab="environments">Environments</button>
+    <button class="tab" role="tab" id="tab-cars" aria-controls="panel-cars" aria-selected="false" tabindex="-1" data-tab="cars">Cars</button>
+    <button class="tab" role="tab" id="tab-animals" aria-controls="panel-animals" aria-selected="false" tabindex="-1" data-tab="animals">Animals</button>
   </div>
-</nav>
 
-<header class="hero">
-  <div class="wrap">
-    <h1>Zain Khan</h1>
-    <p class="lead">Information Science &amp; Computer Science Student at CU Boulder.</p>
-    <div class="editor">
-      <div class="bar"><i></i><i></i><i></i><span>portfolio.sql</span></div>
-      <pre id="typed" aria-label="SELECT name, role, location FROM me WHERE status = 'open to opportunities';"></pre>
-    </div>
-    <div class="result" id="heroResult">
-      <table>
-        <thead><tr><th>name</th><th>role</th><th>location</th></tr></thead>
-        <tbody><tr><td>Zain Khan</td><td>Information Science &amp; Computer Science Student</td><td>Boulder</td></tr></tbody>
-      </table>
-    </div>
-  </div>
-</header>
+  <main class="gallery" id="panel-people" role="tabpanel" aria-labelledby="tab-people" tabindex="0">
+    <figure class="exhibit e1" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 1</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e2" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e4" style="--ar:4/5">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 4</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e5" style="--ar:1/1">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 5</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e6" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 6</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
 
-<main>
-  <section id="about" class="reveal">
-    <div class="wrap">
-      <h2>About me</h2>
-      <p>I am a student at CU Boulder. This is a placeholder bio.</p>
-    </div>
+  <main class="gallery" id="panel-environments" role="tabpanel" aria-labelledby="tab-environments" tabindex="0" hidden>
+    <figure class="exhibit e3" style="--ar:2400/1327">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><img class="photo" src="photos/environments-flatirons.jpg" width="2400" height="1327" alt="The Flatirons above a curving path at night under a starry sky" loading="lazy"></div>
+      <figcaption><span class="t">Flatirons</span><span class="m">Sony A7C II &middot; Sony 24&ndash;240mm f/3.5&ndash;6.3</span></figcaption>
+    </figure>
+    <figure class="exhibit e4" style="--ar:2400/1600;grid-column:1 / span 7">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><img class="photo" src="photos/environments-falls.jpg" width="2400" height="1600" alt="A long-exposure waterfall over dark rock surrounded by evergreen trees and autumn shrubs" loading="lazy"></div>
+      <figcaption><span class="t">Falls</span><span class="m">Sony A7C II &middot; Sony 24&ndash;70mm f/2.8 GM II</span></figcaption>
+    </figure>
+    <figure class="exhibit e5" style="--ar:4/5">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e6" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 4</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <main class="gallery" id="panel-cars" role="tabpanel" aria-labelledby="tab-cars" tabindex="0" hidden>
+    <figure class="exhibit e1" style="--ar:1635/2000">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><img class="photo" src="photos/cars-mustang.jpg" width="1635" height="2000" alt="A black Ford Mustang driving along a curved road beneath red rock cliffs and green trees" loading="lazy"></div>
+      <figcaption><span class="t">Ford Mustang</span><span class="m">Sony A7C II &middot; Sony 24&ndash;240mm f/3.5&ndash;6.3</span></figcaption>
+    </figure>
+    <figure class="exhibit e2" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <main class="gallery" id="panel-animals" role="tabpanel" aria-labelledby="tab-animals" tabindex="0" hidden>
+    <figure class="exhibit e1" style="--ar:1/1">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 1</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e2" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <section class="about" aria-labelledby="about-h">
+    <h2 id="about-h">About</h2>
+    <p>Placeholder bio for now.</p>
   </section>
+</div>
 
-  <section id="projects">
-    <div class="wrap">
-      <h2 class="reveal">Projects</h2>
-      <p class="reveal">Select a project to see the full breakdown.</p>
+<footer>&copy; 2026 Zain Khan</footer>
 
-      <div class="project-grid">
-      <article class="project summary reveal" data-open="d-ml">
-        <span class="cat-tag">Machine Learning</span>
-        <h3>Predicting Car Fuel Economy</h3>
-        <p class="meta">Dataset: Auto MPG &nbsp;|&nbsp; Tools: Python, scikit-learn</p>
-        <p class="blurb">Trained linear and polynomial regression models on 398 cars from the 1970s and 80s to predict miles per gallon. The polynomial model explained about 89% of the variation in fuel economy on cars it had never seen.</p>
-        <button class="more" type="button" aria-haspopup="dialog">View details <span aria-hidden="true">&rarr;</span></button>
-      </article>
 
-      <article class="project summary reveal" data-open="d-sql1">
-        <span class="cat-tag">SQL</span>
-        <h3>Camera Database Schema</h3>
-        <p class="meta">Database: SQLite &nbsp;|&nbsp; Tools: SQL</p>
-        <p class="blurb">Designed a relational database for camera bodies, lenses and lens mounts, with six tables and a join table that tracks which lenses fit which bodies.</p>
-        <button class="more" type="button" aria-haspopup="dialog">View details <span aria-hidden="true">&rarr;</span></button>
-      </article>
-
-      <article class="project summary reveal" style="cursor:default">
-        <span class="cat-tag">Coming soon</span>
-        <h3>More to come</h3>
-        <p class="blurb" style="margin-top:.6rem">More projects will be added here soon.</p>
-      </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="skills">
-    <div class="wrap">
-      <h2 class="reveal">Skills</h2>
-      <div class="skills reveal">
-        <div><h3>NULL</h3><p>Under construction</p></div>
-        <div><h3>NULL</h3><p>Under construction</p></div>
-        <div><h3>NULL</h3><p>Under construction</p></div>
-        <div><h3>NULL</h3><p>Under construction</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="reveal">
-    <div class="wrap">
-      <h2>Contact</h2>
-      <ul class="contact-icons">
-        <li>
-          <a class="icon-link" href="mailto:contact@zpashakhan.com" aria-label="Email: contact@zpashakhan.com" title="Email: contact@zpashakhan.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          </a>
-        </li>
-        <li>
-          <a class="icon-link" href="https://www.linkedin.com/in/zain-khan-6a7767333" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          </a>
-        </li>
-        <li>
-          <a class="icon-link" href="resume.pdf" target="_blank" rel="noopener" aria-label="Resume (PDF)" title="Resume (PDF)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-</main>
-
-<footer><div class="wrap foot"><span class="foot-l">&copy; 2026 Zain Khan</span><a class="foot-c" href="photography.html">Photography</a><span class="ai-note" tabindex="0" aria-describedby="ai-tip">AI Disclosure<span class="ai-tip" id="ai-tip" role="tooltip">Some visuals for this site were assisted with AI.</span></span></div></footer>
-
-<dialog class="detail" id="d-sql1" aria-labelledby="d-sql1-t">
-  <div class="project">
-    <button class="detail-close" type="button" aria-label="Close details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <span class="cat-tag">SQL</span>
-    <div class="top"><div><h3 id="d-sql1-t">Camera Database Schema</h3><p class="meta">Database: SQLite<br>Tools: SQL</p></div></div>
-
-    <h4>The idea</h4>
-    <p>For this project I designed my own database schema by sketching one out. I picked cameras because it's something I'm interested in, and because camera bodies and lenses have a real relationship: a lens only fits a body that uses the same mount.</p>
-
-    <h4>The schema</h4>
-    <div class="erscroll"><svg class="er" viewBox="20 36 1120 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ER diagram of the camera database: camera bodies, mounts and lenses"><g class="er-c" data-t="camera_bodies mounts"><path class="er-rel" d="M320 268.0 L385 268.0 L385 268.0 L440 268.0"/><path class="er-crow" d="M333 274.0 L320 268.0 L333 262.0 M333 268.0 L320 268.0"/><circle class="er-one" cx="432" cy="268.0" r="4.5"/></g><g class="er-c" data-t="lenses mounts"><path class="er-rel" d="M840 268.0 L775 268.0 L775 268.0 L720 268.0"/><path class="er-crow" d="M827 262.0 L840 268.0 L827 274.0 M827 268.0 L840 268.0"/><circle class="er-one" cx="728" cy="268.0" r="4.5"/></g><g class="er-t" data-n="mounts" tabindex="0"><rect class="er-card" x="440" y="204" width="280" height="118" rx="16"/><path class="er-head" d="M440 250 V220 Q440 204 456 204 H704 Q720 204 720 220 V250 Z"/><text class="er-name" x="458" y="232.0">mounts</text><text class="er-col er-pk" x="458" y="272.5">mount_id</text><rect class="er-badge" x="596" y="259.0" width="26" height="18" rx="9"/><text class="er-btxt" x="609" y="271.5" text-anchor="middle">PK</text><text class="er-type" x="702" y="272.5" text-anchor="end">integer</text><line class="er-sep" x1="454" x2="706" y1="286" y2="286"/><text class="er-col" x="458" y="308.5">name</text><text class="er-type" x="702" y="308.5" text-anchor="end">text</text></g><g class="er-t" data-n="camera_bodies" tabindex="0"><rect class="er-card" x="40" y="60" width="280" height="406" rx="16"/><path class="er-head" d="M40 106 V76 Q40 60 56 60 H304 Q320 60 320 76 V106 Z"/><text class="er-name" x="58" y="88.0">camera_bodies</text><text class="er-col er-pk" x="58" y="128.5">body_id</text><rect class="er-badge" x="196" y="115.0" width="26" height="18" rx="9"/><text class="er-btxt" x="209" y="127.5" text-anchor="middle">PK</text><text class="er-type" x="302" y="128.5" text-anchor="end">integer</text><line class="er-sep" x1="54" x2="306" y1="142" y2="142"/><text class="er-col" x="58" y="164.5">model</text><text class="er-type" x="302" y="164.5" text-anchor="end">text</text><line class="er-sep" x1="54" x2="306" y1="178" y2="178"/><text class="er-col" x="58" y="200.5">brand</text><text class="er-type" x="302" y="200.5" text-anchor="end">text</text><line class="er-sep" x1="54" x2="306" y1="214" y2="214"/><text class="er-col" x="58" y="236.5">country</text><text class="er-type" x="302" y="236.5" text-anchor="end">text</text><line class="er-sep" x1="54" x2="306" y1="250" y2="250"/><text class="er-col" x="58" y="272.5">mount_id</text><rect class="er-badge" x="196" y="259.0" width="26" height="18" rx="9"/><text class="er-btxt" x="209" y="271.5" text-anchor="middle">FK</text><text class="er-type" x="302" y="272.5" text-anchor="end">integer</text><line class="er-sep" x1="54" x2="306" y1="286" y2="286"/><text class="er-col" x="58" y="308.5">sensor_size</text><text class="er-type" x="302" y="308.5" text-anchor="end">text</text><line class="er-sep" x1="54" x2="306" y1="322" y2="322"/><text class="er-col" x="58" y="344.5">megapixels</text><text class="er-type" x="302" y="344.5" text-anchor="end">real</text><line class="er-sep" x1="54" x2="306" y1="358" y2="358"/><text class="er-col" x="58" y="380.5">release_year</text><text class="er-type" x="302" y="380.5" text-anchor="end">integer</text><line class="er-sep" x1="54" x2="306" y1="394" y2="394"/><text class="er-col" x="58" y="416.5">operating_system</text><text class="er-type" x="302" y="416.5" text-anchor="end">text</text><line class="er-sep" x1="54" x2="306" y1="430" y2="430"/><text class="er-col" x="58" y="452.5">price_usd</text><text class="er-type" x="302" y="452.5" text-anchor="end">real</text></g><g class="er-t" data-n="lenses" tabindex="0"><rect class="er-card" x="840" y="60" width="280" height="370" rx="16"/><path class="er-head" d="M840 106 V76 Q840 60 856 60 H1104 Q1120 60 1120 76 V106 Z"/><text class="er-name" x="858" y="88.0">lenses</text><text class="er-col er-pk" x="858" y="128.5">lens_id</text><rect class="er-badge" x="996" y="115.0" width="26" height="18" rx="9"/><text class="er-btxt" x="1009" y="127.5" text-anchor="middle">PK</text><text class="er-type" x="1102" y="128.5" text-anchor="end">integer</text><line class="er-sep" x1="854" x2="1106" y1="142" y2="142"/><text class="er-col" x="858" y="164.5">model</text><text class="er-type" x="1102" y="164.5" text-anchor="end">text</text><line class="er-sep" x1="854" x2="1106" y1="178" y2="178"/><text class="er-col" x="858" y="200.5">brand</text><text class="er-type" x="1102" y="200.5" text-anchor="end">text</text><line class="er-sep" x1="854" x2="1106" y1="214" y2="214"/><text class="er-col" x="858" y="236.5">country</text><text class="er-type" x="1102" y="236.5" text-anchor="end">text</text><line class="er-sep" x1="854" x2="1106" y1="250" y2="250"/><text class="er-col" x="858" y="272.5">mount_id</text><rect class="er-badge" x="996" y="259.0" width="26" height="18" rx="9"/><text class="er-btxt" x="1009" y="271.5" text-anchor="middle">FK</text><text class="er-type" x="1102" y="272.5" text-anchor="end">integer</text><line class="er-sep" x1="854" x2="1106" y1="286" y2="286"/><text class="er-col" x="858" y="308.5">focal_min_mm</text><text class="er-type" x="1102" y="308.5" text-anchor="end">integer</text><line class="er-sep" x1="854" x2="1106" y1="322" y2="322"/><text class="er-col" x="858" y="344.5">focal_max_mm</text><text class="er-type" x="1102" y="344.5" text-anchor="end">integer</text><line class="er-sep" x1="854" x2="1106" y1="358" y2="358"/><text class="er-col" x="858" y="380.5">max_aperture</text><text class="er-type" x="1102" y="380.5" text-anchor="end">real</text><line class="er-sep" x1="854" x2="1106" y1="394" y2="394"/><text class="er-col" x="858" y="416.5">price_usd</text><text class="er-type" x="1102" y="416.5" text-anchor="end">real</text></g></svg></div>
-
-    <h4>A query on the database</h4>
-    <p>This query looks up my own setup, a Sony A7C II with a 24-70mm f/2.8 G Master lens, by joining the tables back together.</p>
-<pre><code><span class="kw">SELECT</span> cb.brand,
-       cb.model <span class="kw">AS</span> camera,
-       l.model <span class="kw">AS</span> lens,
-       m.name <span class="kw">AS</span> mount,
-       cb.megapixels,
-       l.focal_min_mm || &#x27;-&#x27; || l.focal_max_mm || &#x27;mm&#x27; <span class="kw">AS</span> focal_range,
-       &#x27;f/&#x27; || l.max_aperture <span class="kw">AS</span> max_aperture
-<span class="kw">FROM</span> camera_bodies cb
-<span class="kw">JOIN</span> mounts m <span class="kw">ON</span> cb.mount_id = m.mount_id
-<span class="kw">JOIN</span> lenses l <span class="kw">ON</span> l.mount_id = cb.mount_id
-<span class="kw">WHERE</span> cb.model = &#x27;A7C II&#x27;
-  <span class="kw">AND</span> l.model = &#x27;FE 24-70mm F2.8 GM&#x27;;</code></pre>
-    <p class="runrow"><button class="run" type="button">Run query</button></p>
-    <div class="output">
-      <table>
-        <thead><tr><th>brand</th><th>camera</th><th>lens</th><th>mount</th><th>megapixels</th><th>focal_range</th><th>max_aperture</th></tr></thead>
-        <tbody><tr><td>Sony</td><td>A7C II</td><td>FE 24-70mm F2.8 GM</td><td>Sony E</td><td>33.0</td><td>24-70mm</td><td>f/2.8</td></tr></tbody>
-      </table>
-    </div>
-    <p>It starts at camera_bodies, joins mounts to get the mount name, then finds the lenses that use the same mount as that camera, and filters down to the two I own.</p>
-
-  </div>
-</dialog>
-
-<dialog class="detail" id="d-ml" aria-labelledby="d-ml-t">
-  <div class="project">
-    <button class="detail-close" type="button" aria-label="Close details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <span class="cat-tag">Machine Learning</span>
-    <div class="top"><div><h3 id="d-ml-t">Predicting Car Fuel Economy</h3><p class="meta">Dataset: Auto MPG, 398 cars from 1970&ndash;82<br>Tools: Python, pandas, scikit-learn, matplotlib</p></div></div>
-
-    <div class="ml-stats">
-      <div class="stat"><b>0.892</b><span>test R&sup2;, polynomial model</span></div>
-      <div class="stat"><b>0.806</b><span>test R&sup2;, linear baseline</span></div>
-      <div class="stat"><b>398</b><span>cars, 80 held back for testing</span></div>
-    </div>
-
-    <h4>The dataset and why I chose it</h4>
-    <p>This dataset has information on car models from the 70's and 80's. Older vehicles are an interest of mine, so being able to visualize data about them is something I really wanted to do. It also has a variety of datatypes to work with, which gave me a lot more to work with. The goal is to predict a car's fuel economy from its other features. I thought with how simple cars were back then, that it would be easier to estimate fuel economy.</p>
-
-    <h4>Cleaning and feature engineering</h4>
-    <ol>
-      <li><strong>Missing values.</strong> Horsepower was stored as text because six rows had a "?" in them, so those had to be changed into proper null values before I could work with them. I filled them in with the median, which is 93.5.</li>
-      <li><strong>Balance and outliers.</strong> It seems that the origin column is imbalanced, with a vast majority of the cars being American made, 249 of 398 cars. Odd numbered cylinder engines are also incredibly uncommon, and four cylinders is the most common at 204 cars. Since fuel economy is a number, there aren't any classes to balance. I kept all of the rows because there were no absurd values that didn't seem accurate for a car from this era.</li>
-      <li><strong>Encoding.</strong> There are 305 unique car names out of 398 rows, so most are unique and the model wouldn't have much to learn from if I one hot encoded them. I pulled out the brand, which is the first word of the name, instead and fixed the typos and duplicates, like "chevy" and "chevrolet". Origin was one hot encoded since the numbers are just labels and not sequential.</li>
-      <li><strong>Correlated columns.</strong> Fuel economy has the strongest correlation with weight, and it is negative, so the heavier a car is, the worse its fuel efficiency is. Weight, displacement, horsepower, and cylinders are also all correlated with each other, which makes sense since the larger a vehicle is, the more powerful it seemingly needs to be. They were too highly correlated, so I removed cylinders and displacement so they don't harm the model.</li>
-    </ol>
-    <div class="figs">
-      <figure class="fig"><svg viewBox="0 0 460 350" role="img" aria-label="Histogram of fuel economy: most cars fall between 13 and 30 mpg, with a tail toward higher values" xmlns="http://www.w3.org/2000/svg"><line class="gr" x1="44" x2="448" y1="304.0" y2="304.0"/><text x="38" y="308.0" text-anchor="end">0</text><line class="gr" x1="44" x2="448" y1="262.3" y2="262.3"/><text x="38" y="266.3" text-anchor="end">10</text><line class="gr" x1="44" x2="448" y1="220.6" y2="220.6"/><text x="38" y="224.6" text-anchor="end">20</text><line class="gr" x1="44" x2="448" y1="178.9" y2="178.9"/><text x="38" y="182.9" text-anchor="end">30</text><line class="gr" x1="44" x2="448" y1="137.1" y2="137.1"/><text x="38" y="141.1" text-anchor="end">40</text><line class="gr" x1="44" x2="448" y1="95.4" y2="95.4"/><text x="38" y="99.4" text-anchor="end">50</text><line class="gr" x1="44" x2="448" y1="53.7" y2="53.7"/><text x="38" y="57.7" text-anchor="end">60</text><line class="gr" x1="44" x2="448" y1="12.0" y2="12.0"/><text x="38" y="16.0" text-anchor="end">70</text><text x="44.0" y="320" text-anchor="middle">9</text><text x="106.2" y="320" text-anchor="middle">15</text><text x="168.3" y="320" text-anchor="middle">21</text><text x="230.5" y="320" text-anchor="middle">27</text><text x="292.6" y="320" text-anchor="middle">33</text><text x="354.8" y="320" text-anchor="middle">39</text><text x="416.9" y="320" text-anchor="middle">45</text><line class="ax" x1="44" x2="448" y1="304" y2="304"/><line class="ax" x1="44" x2="44" y1="12" y2="304"/><text class="lab" x="246.0" y="344" text-anchor="middle">fuel economy (mpg)</text><text class="lab" transform="translate(12 158.0) rotate(-90)" text-anchor="middle">number of cars</text><rect class="bar" x="45.0" y="274.8" width="29.1" height="29.2" rx="2"/><rect class="bar" x="76.1" y="112.1" width="29.1" height="191.9" rx="2"/><rect class="bar" x="107.2" y="78.7" width="29.1" height="225.3" rx="2"/><rect class="bar" x="138.2" y="37.0" width="29.1" height="267.0" rx="2"/><rect class="bar" x="169.3" y="124.6" width="29.1" height="179.4" rx="2"/><rect class="bar" x="200.4" y="91.3" width="29.1" height="212.7" rx="2"/><rect class="bar" x="231.5" y="133.0" width="29.1" height="171.0" rx="2"/><rect class="bar" x="262.5" y="145.5" width="29.1" height="158.5" rx="2"/><rect class="bar" x="293.6" y="212.2" width="29.1" height="91.8" rx="2"/><rect class="bar" x="324.7" y="220.6" width="29.1" height="83.4" rx="2"/><rect class="bar" x="355.8" y="279.0" width="29.1" height="25.0" rx="2"/><rect class="bar" x="386.8" y="283.1" width="29.1" height="20.9" rx="2"/><rect class="bar" x="417.9" y="299.8" width="29.1" height="4.2" rx="2"/></svg><figcaption class="cap">Most cars fall between about 13 and 30 mpg, with a smaller group of really efficient ones.</figcaption></figure>
-      <figure class="fig"><div class="hmwrap"><table class="hm" aria-label="Correlation between numeric columns"><thead><tr><th></th><th>mpg</th><th>cyl</th><th>disp</th><th>hp</th><th>weight</th><th>accel</th><th>year</th></tr></thead><tbody><tr><th>mpg</th><td style="background:rgba(224,86,60,0.72)">1.00</td><td style="background:rgba(70,120,235,0.56)">-0.78</td><td style="background:rgba(70,120,235,0.58)">-0.80</td><td style="background:rgba(70,120,235,0.56)">-0.77</td><td style="background:rgba(70,120,235,0.60)">-0.83</td><td style="background:rgba(224,86,60,0.30)">0.42</td><td style="background:rgba(224,86,60,0.42)">0.58</td></tr><tr><th>cyl</th><td style="background:rgba(70,120,235,0.56)">-0.78</td><td style="background:rgba(224,86,60,0.72)">1.00</td><td style="background:rgba(224,86,60,0.68)">0.95</td><td style="background:rgba(224,86,60,0.61)">0.84</td><td style="background:rgba(224,86,60,0.65)">0.90</td><td style="background:rgba(70,120,235,0.36)">-0.51</td><td style="background:rgba(70,120,235,0.25)">-0.35</td></tr><tr><th>disp</th><td style="background:rgba(70,120,235,0.58)">-0.80</td><td style="background:rgba(224,86,60,0.68)">0.95</td><td style="background:rgba(224,86,60,0.72)">1.00</td><td style="background:rgba(224,86,60,0.64)">0.90</td><td style="background:rgba(224,86,60,0.67)">0.93</td><td style="background:rgba(70,120,235,0.39)">-0.54</td><td style="background:rgba(70,120,235,0.27)">-0.37</td></tr><tr><th>hp</th><td style="background:rgba(70,120,235,0.56)">-0.77</td><td style="background:rgba(224,86,60,0.61)">0.84</td><td style="background:rgba(224,86,60,0.64)">0.90</td><td style="background:rgba(224,86,60,0.72)">1.00</td><td style="background:rgba(224,86,60,0.62)">0.86</td><td style="background:rgba(70,120,235,0.49)">-0.69</td><td style="background:rgba(70,120,235,0.30)">-0.41</td></tr><tr><th>weight</th><td style="background:rgba(70,120,235,0.60)">-0.83</td><td style="background:rgba(224,86,60,0.65)">0.90</td><td style="background:rgba(224,86,60,0.67)">0.93</td><td style="background:rgba(224,86,60,0.62)">0.86</td><td style="background:rgba(224,86,60,0.72)">1.00</td><td style="background:rgba(70,120,235,0.30)">-0.42</td><td style="background:rgba(70,120,235,0.22)">-0.31</td></tr><tr><th>accel</th><td style="background:rgba(224,86,60,0.30)">0.42</td><td style="background:rgba(70,120,235,0.36)">-0.51</td><td style="background:rgba(70,120,235,0.39)">-0.54</td><td style="background:rgba(70,120,235,0.49)">-0.69</td><td style="background:rgba(70,120,235,0.30)">-0.42</td><td style="background:rgba(224,86,60,0.72)">1.00</td><td style="background:rgba(224,86,60,0.21)">0.29</td></tr><tr><th>year</th><td style="background:rgba(224,86,60,0.42)">0.58</td><td style="background:rgba(70,120,235,0.25)">-0.35</td><td style="background:rgba(70,120,235,0.27)">-0.37</td><td style="background:rgba(70,120,235,0.30)">-0.41</td><td style="background:rgba(70,120,235,0.22)">-0.31</td><td style="background:rgba(224,86,60,0.21)">0.29</td><td style="background:rgba(224,86,60,0.72)">1.00</td></tr></tbody></table></div><figcaption class="cap">Correlation between columns. Red means they go up together and blue means one goes up as the other goes down. Weight has the strongest link to fuel economy, at -0.83.</figcaption></figure>
-    </div>
-
-    <h4>Finding clusters without using mpg</h4>
-    <p>I left out fuel economy, used only the features, and ran K-means on them. The elbow is at k=2 because that's where the most pronounced bend in the chart is. It split the cars into two groups: 301 lighter, lower horsepower cars that average about 2,592 lb and 86 hp and 97 much heavier and more powerful ones that average about 4,144 lb and 162 hp. The fuel economy between the two groups varies drastically, with the more efficient group at about 26.4 mpg and the more powerful, less efficient group at only a little over 14.5.</p>
-    <div class="figs">
-      <figure class="fig"><svg viewBox="0 0 460 250" role="img" aria-label="Elbow plot: inertia drops sharply from one to two clusters, then flattens" xmlns="http://www.w3.org/2000/svg"><line class="gr" x1="44" x2="448" y1="204.0" y2="204.0"/><text x="38" y="208.0" text-anchor="end">0</text><line class="gr" x1="44" x2="448" y1="140.0" y2="140.0"/><text x="38" y="144.0" text-anchor="end">600</text><line class="gr" x1="44" x2="448" y1="76.0" y2="76.0"/><text x="38" y="80.0" text-anchor="end">1200</text><line class="gr" x1="44" x2="448" y1="12.0" y2="12.0"/><text x="38" y="16.0" text-anchor="end">1800</text><text x="54.0" y="220" text-anchor="middle">1</text><text x="108.9" y="220" text-anchor="middle">2</text><text x="163.7" y="220" text-anchor="middle">3</text><text x="218.6" y="220" text-anchor="middle">4</text><text x="273.4" y="220" text-anchor="middle">5</text><text x="328.3" y="220" text-anchor="middle">6</text><text x="383.1" y="220" text-anchor="middle">7</text><text x="438.0" y="220" text-anchor="middle">8</text><line class="ax" x1="44" x2="448" y1="204" y2="204"/><line class="ax" x1="44" x2="44" y1="12" y2="204"/><text class="lab" x="246.0" y="244" text-anchor="middle">number of clusters (k)</text><text class="lab" transform="translate(12 108.0) rotate(-90)" text-anchor="middle">inertia</text><polyline class="line" pathLength="1" points="54.0,34.2 108.9,112.7 163.7,135.7 218.6,146.7 273.4,155.2 328.3,160.9 383.1,165.6 438.0,168.9"/><circle class="pt1" cx="54.0" cy="34.2" r="3.5"/><circle class="pt2" cx="108.9" cy="112.7" r="5"/><circle class="pt1" cx="163.7" cy="135.7" r="3.5"/><circle class="pt1" cx="218.6" cy="146.7" r="3.5"/><circle class="pt1" cx="273.4" cy="155.2" r="3.5"/><circle class="pt1" cx="328.3" cy="160.9" r="3.5"/><circle class="pt1" cx="383.1" cy="165.6" r="3.5"/><circle class="pt1" cx="438.0" cy="168.9" r="3.5"/><text class="note" x="118.9" y="102.7">elbow at k = 2</text></svg><figcaption class="cap">Elbow plot. The bend is at 2 clusters.</figcaption></figure>
-      <figure class="fig"><svg viewBox="0 0 460 250" role="img" aria-label="Scatter of weight against horsepower, colored by the two clusters found without using mpg" xmlns="http://www.w3.org/2000/svg"><line class="gr" x1="44" x2="448" y1="186.5" y2="186.5"/><text x="38" y="190.5" text-anchor="end">50</text><line class="gr" x1="44" x2="448" y1="142.9" y2="142.9"/><text x="38" y="146.9" text-anchor="end">100</text><line class="gr" x1="44" x2="448" y1="99.3" y2="99.3"/><text x="38" y="103.3" text-anchor="end">150</text><line class="gr" x1="44" x2="448" y1="55.6" y2="55.6"/><text x="38" y="59.6" text-anchor="end">200</text><line class="gr" x1="44" x2="448" y1="12.0" y2="12.0"/><text x="38" y="16.0" text-anchor="end">250</text><text x="106.2" y="220" text-anchor="middle">2,000</text><text x="209.7" y="220" text-anchor="middle">3,000</text><text x="313.3" y="220" text-anchor="middle">4,000</text><text x="416.9" y="220" text-anchor="middle">5,000</text><line class="ax" x1="44" x2="448" y1="204" y2="204"/><line class="ax" x1="44" x2="44" y1="12" y2="204"/><text class="lab" x="246.0" y="244" text-anchor="middle">weight (lb)</text><text class="lab" transform="translate(12 108.0) rotate(-90)" text-anchor="middle">horsepower</text><circle class="pt1 dot" cx="225.8" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="137.2" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="164.2" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="122.2" cy="170.8" r="3.4"/><circle class="pt1 dot" cx="252.2" cy="125.5" r="3.4"/><circle class="pt1 dot" cx="274.0" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="217.0" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="249.1" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="231.5" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="254.3" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="180.7" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="206.1" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="130.0" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="265.2" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="247.6" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="85.4" cy="177.8" r="3.4"/><circle class="pt1 dot" cx="113.4" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="104.6" cy="184.8" r="3.4"/><circle class="pt1 dot" cx="85.4" cy="172.6" r="3.4"/><circle class="pt1 dot" cx="104.6" cy="188.3" r="3.4"/><circle class="pt1 dot" cx="180.7" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="168.3" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="190.6" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="235.1" cy="129.8" r="3.4"/><circle class="pt1 dot" cx="264.6" cy="163.0" r="3.4"/><circle class="pt1 dot" cx="175.6" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="97.3" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="103.6" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="98.4" cy="168.2" r="3.4"/><circle class="pt1 dot" cx="272.4" cy="121.1" r="3.4"/><circle class="pt1 dot" cx="247.0" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="237.2" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="198.3" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="208.7" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="125.8" cy="162.1" r="3.4"/><circle class="pt1 dot" cx="120.1" cy="170.8" r="3.4"/><circle class="pt1 dot" cx="105.1" cy="168.2" r="3.4"/><circle class="pt1 dot" cx="252.2" cy="114.1" r="3.4"/><circle class="pt1 dot" cx="188.5" cy="129.8" r="3.4"/><circle class="pt1 dot" cx="224.2" cy="121.1" r="3.4"/><circle class="pt1 dot" cx="192.1" cy="140.3" r="3.4"/><circle class="pt1 dot" cx="148.1" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="194.7" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="183.3" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="159.5" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="218.5" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="122.2" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="105.1" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="88.0" cy="168.2" r="3.4"/><circle class="pt1 dot" cx="229.7" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="276.6" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="269.2" cy="162.1" r="3.4"/><circle class="pt1 dot" cx="119.6" cy="184.8" r="3.4"/><circle class="pt1 dot" cx="84.9" cy="183.9" r="3.4"/><circle class="pt1 dot" cx="99.6" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="123.1" cy="177.8" r="3.4"/><circle class="pt1 dot" cx="109.8" cy="184.8" r="3.4"/><circle class="pt1 dot" cx="164.7" cy="167.3" r="3.4"/><circle class="pt1 dot" cx="211.0" cy="159.5" r="3.4"/><circle class="pt1 dot" cx="246.3" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="233.9" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="127.1" cy="157.7" r="3.4"/><circle class="pt1 dot" cx="132.6" cy="161.2" r="3.4"/><circle class="pt1 dot" cx="165.4" cy="149.9" r="3.4"/><circle class="pt1 dot" cx="128.9" cy="159.5" r="3.4"/><circle class="pt1 dot" cx="154.2" cy="155.1" r="3.4"/><circle class="pt1 dot" cx="84.9" cy="183.9" r="3.4"/><circle class="pt1 dot" cx="175.7" cy="129.8" r="3.4"/><circle class="pt1 dot" cx="263.6" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="104.6" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="113.9" cy="157.7" r="3.4"/><circle class="pt1 dot" cx="111.4" cy="175.2" r="3.4"/><circle class="pt1 dot" cx="184.4" cy="152.5" r="3.4"/><circle class="pt1 dot" cx="133.6" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="182.8" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="99.9" cy="162.1" r="3.4"/><circle class="pt1 dot" cx="264.1" cy="144.7" r="3.4"/><circle class="pt1 dot" cx="275.0" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="253.8" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="303.0" cy="121.1" r="3.4"/><circle class="pt1 dot" cx="319.5" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="100.5" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="137.2" cy="146.4" r="3.4"/><circle class="pt1 dot" cx="88.0" cy="179.6" r="3.4"/><circle class="pt1 dot" cx="122.2" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="110.8" cy="170.8" r="3.4"/><circle class="pt1 dot" cx="294.7" cy="125.5" r="3.4"/><circle class="pt1 dot" cx="202.5" cy="135.9" r="3.4"/><circle class="pt1 dot" cx="237.7" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="225.3" cy="141.2" r="3.4"/><circle class="pt1 dot" cx="243.8" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="82.6" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="112.9" cy="163.9" r="3.4"/><circle class="pt1 dot" cx="113.8" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="118.9" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="128.9" cy="155.1" r="3.4"/><circle class="pt1 dot" cx="224.1" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="239.0" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="148.4" cy="167.3" r="3.4"/><circle class="pt1 dot" cx="205.8" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="239.6" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="241.0" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="66.1" cy="170.0" r="3.4"/><circle class="pt1 dot" cx="255.2" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="171.8" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="110.8" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="128.4" cy="175.2" r="3.4"/><circle class="pt1 dot" cx="104.6" cy="170.8" r="3.4"/><circle class="pt1 dot" cx="111.3" cy="176.1" r="3.4"/><circle class="pt1 dot" cx="103.6" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="112.9" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="81.3" cy="177.8" r="3.4"/><circle class="pt1 dot" cx="93.2" cy="174.3" r="3.4"/><circle class="pt1 dot" cx="101.5" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="188.0" cy="155.1" r="3.4"/><circle class="pt1 dot" cx="204.6" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="144.5" cy="156.9" r="3.4"/><circle class="pt1 dot" cx="175.0" cy="146.4" r="3.4"/><circle class="pt1 dot" cx="192.7" cy="132.4" r="3.4"/><circle class="pt1 dot" cx="166.8" cy="149.9" r="3.4"/><circle class="pt1 dot" cx="211.3" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="204.0" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="105.6" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="102.5" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="80.8" cy="179.6" r="3.4"/><circle class="pt1 dot" cx="145.5" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="173.3" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="110.9" cy="148.6" r="3.4"/><circle class="pt1 dot" cx="129.6" cy="155.1" r="3.4"/><circle class="pt1 dot" cx="148.4" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="132.5" cy="183.1" r="3.4"/><circle class="pt1 dot" cx="119.2" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="135.0" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="136.7" cy="156.9" r="3.4"/><circle class="pt1 dot" cx="89.0" cy="177.8" r="3.4"/><circle class="pt1 dot" cx="121.1" cy="163.9" r="3.4"/><circle class="pt1 dot" cx="151.1" cy="149.9" r="3.4"/><circle class="pt1 dot" cx="162.3" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="179.8" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="125.6" cy="162.1" r="3.4"/><circle class="pt1 dot" cx="249.2" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="210.1" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="196.3" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="176.4" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="108.1" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="118.6" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="102.8" cy="177.8" r="3.4"/><circle class="pt1 dot" cx="133.6" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="163.7" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="178.7" cy="129.8" r="3.4"/><circle class="pt1 dot" cx="167.8" cy="129.8" r="3.4"/><circle class="pt1 dot" cx="175.6" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="119.6" cy="170.0" r="3.4"/><circle class="pt1 dot" cx="108.2" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="121.7" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="126.9" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="253.3" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="229.4" cy="168.2" r="3.4"/><circle class="pt1 dot" cx="90.1" cy="176.1" r="3.4"/><circle class="pt1 dot" cx="146.0" cy="156.9" r="3.4"/><circle class="pt1 dot" cx="181.3" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="170.4" cy="149.9" r="3.4"/><circle class="pt1 dot" cx="171.9" cy="156.9" r="3.4"/><circle class="pt1 dot" cx="156.9" cy="156.9" r="3.4"/><circle class="pt1 dot" cx="136.2" cy="167.3" r="3.4"/><circle class="pt1 dot" cx="199.9" cy="148.6" r="3.4"/><circle class="pt1 dot" cx="157.9" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="149.7" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="200.4" cy="115.0" r="3.4"/><circle class="pt1 dot" cx="277.2" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="121.2" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="89.1" cy="148.6" r="3.4"/><circle class="pt1 dot" cx="90.6" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="235.6" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="204.6" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="140.9" cy="188.3" r="3.4"/><circle class="pt1 dot" cx="115.0" cy="188.3" r="3.4"/><circle class="pt1 dot" cx="117.5" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="189.0" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="117.5" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="129.8" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="123.1" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="158.6" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="136.0" cy="149.9" r="3.4"/><circle class="pt1 dot" cx="147.1" cy="155.1" r="3.4"/><circle class="pt1 dot" cx="125.7" cy="170.0" r="3.4"/><circle class="pt1 dot" cx="207.6" cy="154.3" r="3.4"/><circle class="pt1 dot" cx="159.1" cy="163.9" r="3.4"/><circle class="pt1 dot" cx="202.8" cy="132.4" r="3.4"/><circle class="pt1 dot" cx="140.3" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="116.5" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="133.5" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="119.6" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="108.7" cy="170.8" r="3.4"/><circle class="pt1 dot" cx="130.4" cy="131.6" r="3.4"/><circle class="pt1 dot" cx="145.0" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="150.7" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="175.8" cy="154.3" r="3.4"/><circle class="pt1 dot" cx="89.1" cy="190.0" r="3.4"/><circle class="pt1 dot" cx="147.7" cy="167.3" r="3.4"/><circle class="pt1 dot" cx="196.1" cy="132.4" r="3.4"/><circle class="pt1 dot" cx="166.4" cy="150.8" r="3.4"/><circle class="pt1 dot" cx="122.5" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="92.4" cy="187.4" r="3.4"/><circle class="pt1 dot" cx="133.6" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="155.0" cy="136.8" r="3.4"/><circle class="pt1 dot" cx="138.3" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="119.0" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="145.4" cy="148.1" r="3.4"/><circle class="pt1 dot" cx="119.6" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="135.1" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="187.9" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="101.0" cy="190.0" r="3.4"/><circle class="pt1 dot" cx="199.8" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="211.9" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="204.0" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="238.5" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="222.3" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="199.4" cy="128.9" r="3.4"/><circle class="pt1 dot" cx="165.7" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="147.1" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="172.5" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="168.8" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="257.9" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="216.0" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="284.8" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="252.7" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="202.5" cy="125.5" r="3.4"/><circle class="pt1 dot" cx="160.5" cy="156.9" r="3.4"/><circle class="pt1 dot" cx="226.3" cy="163.9" r="3.4"/><circle class="pt1 dot" cx="233.6" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="171.9" cy="165.6" r="3.4"/><circle class="pt1 dot" cx="169.9" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="142.4" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="127.9" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="139.3" cy="148.6" r="3.4"/><circle class="pt1 dot" cx="125.8" cy="165.6" r="3.4"/><circle class="pt1 dot" cx="122.7" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="167.0" cy="156.0" r="3.4"/><circle class="pt1 dot" cx="186.3" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="192.4" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="144.7" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="170.9" cy="161.2" r="3.4"/><circle class="pt1 dot" cx="102.5" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="131.5" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="127.4" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="205.3" cy="153.4" r="3.4"/><circle class="pt1 dot" cx="119.1" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="119.1" cy="175.2" r="3.4"/><circle class="pt1 dot" cx="103.0" cy="170.8" r="3.4"/><circle class="pt1 dot" cx="180.7" cy="158.6" r="3.4"/><circle class="pt1 dot" cx="104.1" cy="165.6" r="3.4"/><circle class="pt1 dot" cx="213.4" cy="148.6" r="3.4"/><circle class="pt1 dot" cx="195.8" cy="149.9" r="3.4"/><circle class="pt1 dot" cx="182.3" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="131.6" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="303.7" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="226.1" cy="167.3" r="3.4"/><circle class="pt1 dot" cx="254.5" cy="167.3" r="3.4"/><circle class="pt1 dot" cx="257.3" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="237.1" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="106.2" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="146.7" cy="149.0" r="3.4"/><circle class="pt1 dot" cx="156.8" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="302.7" cy="138.5" r="3.4"/><circle class="pt1 dot" cx="117.3" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="174.5" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="106.5" cy="176.9" r="3.4"/><circle class="pt1 dot" cx="69.8" cy="184.8" r="3.4"/><circle class="pt1 dot" cx="137.2" cy="162.1" r="3.4"/><circle class="pt1 dot" cx="102.3" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="128.8" cy="157.7" r="3.4"/><circle class="pt1 dot" cx="167.5" cy="162.1" r="3.4"/><circle class="pt1 dot" cx="204.0" cy="144.7" r="3.4"/><circle class="pt1 dot" cx="178.0" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="231.6" cy="151.6" r="3.4"/><circle class="pt1 dot" cx="99.6" cy="169.1" r="3.4"/><circle class="pt1 dot" cx="208.1" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="162.6" cy="145.5" r="3.4"/><circle class="pt1 dot" cx="129.3" cy="168.2" r="3.4"/><circle class="pt1 dot" cx="178.9" cy="146.4" r="3.4"/><circle class="pt1 dot" cx="119.1" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="200.8" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="172.3" cy="157.7" r="3.4"/><circle class="pt1 dot" cx="123.9" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="232.6" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="213.8" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="291.1" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="285.4" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="196.8" cy="148.6" r="3.4"/><circle class="pt1 dot" cx="189.8" cy="123.7" r="3.4"/><circle class="pt1 dot" cx="162.3" cy="164.7" r="3.4"/><circle class="pt1 dot" cx="220.3" cy="147.3" r="3.4"/><circle class="pt1 dot" cx="199.5" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="244.5" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="101.0" cy="171.7" r="3.4"/><circle class="pt1 dot" cx="152.9" cy="160.4" r="3.4"/><circle class="pt1 dot" cx="89.2" cy="173.5" r="3.4"/><circle class="pt1 dot" cx="290.6" cy="142.9" r="3.4"/><circle class="pt1 dot" cx="275.2" cy="134.2" r="3.4"/><circle class="pt1 dot" cx="273.2" cy="138.5" r="3.4"/><circle class="pt2 dot" cx="329.3" cy="96.7" r="3.4"/><circle class="pt2 dot" cx="281.5" cy="86.2" r="3.4"/><circle class="pt2 dot" cx="323.3" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="412.3" cy="73.1" r="3.4"/><circle class="pt2 dot" cx="390.6" cy="81.8" r="3.4"/><circle class="pt2 dot" cx="431.4" cy="77.5" r="3.4"/><circle class="pt2 dot" cx="381.1" cy="81.8" r="3.4"/><circle class="pt2 dot" cx="361.4" cy="77.5" r="3.4"/><circle class="pt2 dot" cx="335.0" cy="86.2" r="3.4"/><circle class="pt2 dot" cx="352.7" cy="73.1" r="3.4"/><circle class="pt2 dot" cx="358.9" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="254.9" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="254.6" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="256.3" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="262.0" cy="116.7" r="3.4"/><circle class="pt2 dot" cx="348.7" cy="57.4" r="3.4"/><circle class="pt2 dot" cx="350.0" cy="38.2" r="3.4"/><circle class="pt2 dot" cx="345.7" cy="42.5" r="3.4"/><circle class="pt2 dot" cx="357.4" cy="33.8" r="3.4"/><circle class="pt2 dot" cx="297.8" cy="64.4" r="3.4"/><circle class="pt2 dot" cx="268.1" cy="81.8" r="3.4"/><circle class="pt2 dot" cx="321.6" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="251.1" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="278.5" cy="73.1" r="3.4"/><circle class="pt2 dot" cx="268.8" cy="108.9" r="3.4"/><circle class="pt2 dot" cx="342.1" cy="29.5" r="3.4"/><circle class="pt2 dot" cx="335.6" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="333.0" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="309.4" cy="125.5" r="3.4"/><circle class="pt2 dot" cx="335.6" cy="97.5" r="3.4"/><circle class="pt2 dot" cx="253.8" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="255.8" cy="86.2" r="3.4"/><circle class="pt2 dot" cx="231.0" cy="108.9" r="3.4"/><circle class="pt2 dot" cx="365.0" cy="73.1" r="3.4"/><circle class="pt2 dot" cx="353.2" cy="77.5" r="3.4"/><circle class="pt2 dot" cx="341.7" cy="86.2" r="3.4"/><circle class="pt2 dot" cx="321.8" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="285.9" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="227.3" cy="117.6" r="3.4"/><circle class="pt2 dot" cx="381.4" cy="101.0" r="3.4"/><circle class="pt2 dot" cx="364.9" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="218.7" cy="33.8" r="3.4"/><circle class="pt2 dot" cx="382.5" cy="81.8" r="3.4"/><circle class="pt2 dot" cx="307.1" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="279.4" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="323.5" cy="116.7" r="3.4"/><circle class="pt2 dot" cx="343.8" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="321.3" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="284.8" cy="117.6" r="3.4"/><circle class="pt2 dot" cx="336.1" cy="73.1" r="3.4"/><circle class="pt2 dot" cx="330.4" cy="81.8" r="3.4"/><circle class="pt2 dot" cx="347.0" cy="64.4" r="3.4"/><circle class="pt2 dot" cx="348.0" cy="100.1" r="3.4"/><circle class="pt2 dot" cx="308.7" cy="109.7" r="3.4"/><circle class="pt2 dot" cx="295.7" cy="112.4" r="3.4"/><circle class="pt2 dot" cx="340.0" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="379.4" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="323.7" cy="77.5" r="3.4"/><circle class="pt2 dot" cx="302.1" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="312.1" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="317.7" cy="110.6" r="3.4"/><circle class="pt2 dot" cx="290.2" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="412.0" cy="57.4" r="3.4"/><circle class="pt2 dot" cx="361.4" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="350.9" cy="92.3" r="3.4"/><circle class="pt2 dot" cx="337.9" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="389.5" cy="42.5" r="3.4"/><circle class="pt2 dot" cx="411.8" cy="33.8" r="3.4"/><circle class="pt2 dot" cx="307.1" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="294.8" cy="77.5" r="3.4"/><circle class="pt2 dot" cx="318.9" cy="106.3" r="3.4"/><circle class="pt2 dot" cx="352.9" cy="46.9" r="3.4"/><circle class="pt2 dot" cx="288.6" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="350.6" cy="94.9" r="3.4"/><circle class="pt2 dot" cx="319.0" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="299.9" cy="116.7" r="3.4"/><circle class="pt2 dot" cx="288.0" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="407.2" cy="84.4" r="3.4"/><circle class="pt2 dot" cx="416.6" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="300.9" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="327.9" cy="108.0" r="3.4"/><circle class="pt2 dot" cx="327.8" cy="103.6" r="3.4"/><circle class="pt2 dot" cx="377.0" cy="42.5" r="3.4"/><circle class="pt2 dot" cx="352.3" cy="55.6" r="3.4"/><circle class="pt2 dot" cx="272.8" cy="90.5" r="3.4"/><circle class="pt2 dot" cx="389.2" cy="61.7" r="3.4"/><circle class="pt2 dot" cx="343.9" cy="116.7" r="3.4"/><circle class="pt2 dot" cx="385.7" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="360.7" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="327.3" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="326.7" cy="96.7" r="3.4"/><circle class="pt2 dot" cx="279.4" cy="99.3" r="3.4"/><circle class="pt2 dot" cx="378.9" cy="48.7" r="3.4"/><circle class="pt2 dot" cx="365.3" cy="94.9" r="3.4"/><circle class="pt2 dot" cx="360.6" cy="90.5" r="3.4"/><circle class="pt2 dot" cx="357.0" cy="64.4" r="3.4"/><circle class="pt2 dot" cx="296.8" cy="116.7" r="3.4"/></svg><figcaption class="cap"><span class="key k1"></span>lighter, lower horsepower &nbsp; <span class="key k2"></span>heavier, more powerful</figcaption></figure>
-    </div>
-
-    <h4>Train/test split and the models</h4>
-    <p>I held out 20% of the cars, which is 80, to test on and trained on the other 318. The model can't see the test cars while it trains, otherwise it would memorize them and make the scores look better than they actually are. Based on the shape of the fuel economy vs weight and horsepower plots there's a bit of a curve, so a polynomial regression made the most sense using degree 2 on horsepower, weight, acceleration, and model year. I trained a plain linear regression too, since knowing how it acts can show where it might be more accurate.</p>
-
-    <h4>Results</h4>
-    <p>R&sup2; is basically how much of the variation in fuel economy the model explains. On cars it hadn't seen before, the polynomial model explained about 89.2% of it and the linear model explained about 80.6%, so my initial prediction was correct. They are both somewhat accurate, but the polynomial version does have that slight edge, and on the graph it gets slightly tighter when the fuel economy is higher. The training and test scores were close for both, so neither seems badly overfit.</p>
-    <div class="r2">
-      <div class="r2row"><span>Linear</span><div class="track" role="img" aria-label="Linear test R squared 0.806"><i class="b1" style="width:80.6%"></i></div><b>0.806</b><em>train 0.838</em></div>
-      <div class="r2row"><span>Polynomial</span><div class="track" role="img" aria-label="Polynomial test R squared 0.892"><i class="b2" style="width:89.2%"></i></div><b>0.892</b><em>train 0.896</em></div>
-    </div>
-    <figure class="fig solo"><svg viewBox="0 0 460 250" role="img" aria-label="Predicted against actual fuel economy for the 80 test cars; points close to the diagonal line are good predictions" xmlns="http://www.w3.org/2000/svg"><line class="gr" x1="44" x2="448" y1="182.7" y2="182.7"/><text x="38" y="186.7" text-anchor="end">10</text><line class="gr" x1="44" x2="448" y1="140.0" y2="140.0"/><text x="38" y="144.0" text-anchor="end">20</text><line class="gr" x1="44" x2="448" y1="97.3" y2="97.3"/><text x="38" y="101.3" text-anchor="end">30</text><line class="gr" x1="44" x2="448" y1="54.7" y2="54.7"/><text x="38" y="58.7" text-anchor="end">40</text><line class="gr" x1="44" x2="448" y1="12.0" y2="12.0"/><text x="38" y="16.0" text-anchor="end">50</text><text x="88.9" y="220" text-anchor="middle">10</text><text x="178.7" y="220" text-anchor="middle">20</text><text x="268.4" y="220" text-anchor="middle">30</text><text x="358.2" y="220" text-anchor="middle">40</text><text x="448.0" y="220" text-anchor="middle">50</text><line class="ax" x1="44" x2="448" y1="204" y2="204"/><line class="ax" x1="44" x2="44" y1="12" y2="204"/><text class="lab" x="246.0" y="244" text-anchor="middle">actual fuel economy (mpg)</text><text class="lab" transform="translate(12 108.0) rotate(-90)" text-anchor="middle">predicted fuel economy (mpg)</text><line class="diag" x1="44.0" y1="204.0" x2="448.0" y2="12.0"/><circle class="pt1 dot" cx="295.4" cy="82.5" r="3.6"/><circle class="pt1 dot" cx="250.5" cy="93.1" r="3.6"/><circle class="pt1 dot" cx="169.7" cy="138.8" r="3.6"/><circle class="pt1 dot" cx="115.8" cy="159.7" r="3.6"/><circle class="pt1 dot" cx="124.8" cy="169.0" r="3.6"/><circle class="pt1 dot" cx="241.5" cy="120.5" r="3.6"/><circle class="pt1 dot" cx="214.6" cy="106.1" r="3.6"/><circle class="pt1 dot" cx="115.8" cy="186.2" r="3.6"/><circle class="pt1 dot" cx="151.7" cy="144.3" r="3.6"/><circle class="pt1 dot" cx="187.6" cy="144.1" r="3.6"/><circle class="pt1 dot" cx="133.8" cy="161.6" r="3.6"/><circle class="pt1 dot" cx="340.3" cy="62.6" r="3.6"/><circle class="pt1 dot" cx="232.5" cy="111.5" r="3.6"/><circle class="pt1 dot" cx="133.8" cy="167.9" r="3.6"/><circle class="pt1 dot" cx="223.6" cy="126.6" r="3.6"/><circle class="pt1 dot" cx="106.8" cy="161.7" r="3.6"/><circle class="pt1 dot" cx="277.4" cy="88.8" r="3.6"/><circle class="pt1 dot" cx="151.7" cy="133.6" r="3.6"/><circle class="pt1 dot" cx="142.8" cy="160.0" r="3.6"/><circle class="pt1 dot" cx="277.4" cy="65.3" r="3.6"/><circle class="pt1 dot" cx="196.6" cy="128.9" r="3.6"/><circle class="pt1 dot" cx="196.6" cy="142.5" r="3.6"/><circle class="pt1 dot" cx="196.6" cy="113.5" r="3.6"/><circle class="pt1 dot" cx="299.9" cy="101.2" r="3.6"/><circle class="pt1 dot" cx="160.7" cy="157.1" r="3.6"/><circle class="pt1 dot" cx="394.1" cy="47.3" r="3.6"/><circle class="pt1 dot" cx="232.5" cy="116.4" r="3.6"/><circle class="pt1 dot" cx="219.1" cy="120.8" r="3.6"/><circle class="pt1 dot" cx="161.6" cy="147.0" r="3.6"/><circle class="pt1 dot" cx="106.8" cy="168.5" r="3.6"/><circle class="pt1 dot" cx="241.5" cy="101.5" r="3.6"/><circle class="pt1 dot" cx="322.3" cy="65.9" r="3.6"/><circle class="pt1 dot" cx="205.6" cy="137.7" r="3.6"/><circle class="pt1 dot" cx="214.6" cy="127.5" r="3.6"/><circle class="pt1 dot" cx="333.1" cy="65.4" r="3.6"/><circle class="pt1 dot" cx="142.8" cy="168.3" r="3.6"/><circle class="pt1 dot" cx="187.6" cy="141.1" r="3.6"/><circle class="pt1 dot" cx="171.5" cy="151.8" r="3.6"/><circle class="pt1 dot" cx="142.8" cy="165.6" r="3.6"/><circle class="pt1 dot" cx="259.5" cy="112.1" r="3.6"/><circle class="pt1 dot" cx="239.7" cy="109.9" r="3.6"/><circle class="pt1 dot" cx="241.5" cy="103.4" r="3.6"/><circle class="pt1 dot" cx="160.7" cy="142.3" r="3.6"/><circle class="pt1 dot" cx="88.9" cy="185.8" r="3.6"/><circle class="pt1 dot" cx="205.6" cy="132.8" r="3.6"/><circle class="pt1 dot" cx="322.3" cy="77.7" r="3.6"/><circle class="pt1 dot" cx="232.5" cy="105.4" r="3.6"/><circle class="pt1 dot" cx="223.6" cy="129.0" r="3.6"/><circle class="pt1 dot" cx="223.6" cy="129.3" r="3.6"/><circle class="pt1 dot" cx="223.6" cy="108.6" r="3.6"/><circle class="pt1 dot" cx="196.6" cy="131.0" r="3.6"/><circle class="pt1 dot" cx="305.3" cy="83.9" r="3.6"/><circle class="pt1 dot" cx="290.0" cy="88.1" r="3.6"/><circle class="pt1 dot" cx="115.8" cy="189.1" r="3.6"/><circle class="pt1 dot" cx="210.1" cy="112.5" r="3.6"/><circle class="pt1 dot" cx="124.8" cy="163.9" r="3.6"/><circle class="pt1 dot" cx="165.2" cy="166.6" r="3.6"/><circle class="pt1 dot" cx="266.6" cy="108.3" r="3.6"/><circle class="pt1 dot" cx="250.5" cy="129.7" r="3.6"/><circle class="pt1 dot" cx="169.7" cy="141.9" r="3.6"/><circle class="pt1 dot" cx="97.9" cy="154.3" r="3.6"/><circle class="pt1 dot" cx="295.4" cy="86.7" r="3.6"/><circle class="pt1 dot" cx="205.6" cy="131.2" r="3.6"/><circle class="pt1 dot" cx="187.6" cy="139.6" r="3.6"/><circle class="pt1 dot" cx="205.6" cy="140.6" r="3.6"/><circle class="pt1 dot" cx="223.6" cy="125.4" r="3.6"/><circle class="pt1 dot" cx="212.8" cy="109.5" r="3.6"/><circle class="pt1 dot" cx="307.9" cy="75.6" r="3.6"/><circle class="pt1 dot" cx="219.1" cy="99.9" r="3.6"/><circle class="pt1 dot" cx="115.8" cy="165.7" r="3.6"/><circle class="pt1 dot" cx="310.6" cy="74.7" r="3.6"/><circle class="pt1 dot" cx="124.8" cy="175.4" r="3.6"/><circle class="pt1 dot" cx="133.8" cy="169.0" r="3.6"/><circle class="pt1 dot" cx="160.7" cy="149.7" r="3.6"/><circle class="pt1 dot" cx="223.6" cy="109.4" r="3.6"/><circle class="pt1 dot" cx="177.8" cy="127.8" r="3.6"/><circle class="pt1 dot" cx="156.2" cy="149.2" r="3.6"/><circle class="pt1 dot" cx="250.5" cy="93.5" r="3.6"/><circle class="pt1 dot" cx="259.5" cy="97.0" r="3.6"/><circle class="pt1 dot" cx="151.7" cy="150.7" r="3.6"/></svg><figcaption class="cap">Predicted fuel economy against actual fuel economy for the 80 test cars. The closer a dot is to the dashed line, the better the prediction.</figcaption></figure>
-
-    <h4>What I learned</h4>
-    <p>Fuel economy is driven by how big and powerful a vehicle is. Weight, displacement, horsepower, and cylinders were all negatively correlated with fuel economy, and letting the model curve got it about nine points of R&sup2; higher than a straight line. The data is small and outdated, so I don't expect it to be incredibly accurate for newer vehicles, considering the advancements made in technology and efficiency. There also aren't enough 3 and 5 cylinder cars for the model to learn much from.</p>
-    <p>I got a lot more comfortable with pandas and scikit-learn. pandas made the cleaning pretty easy, like turning the bad horsepower values into nulls with to_numeric and one hot encoding the brands with get_dummies. scikit-learn covered everything else, like SimpleImputer for the median, KMeans for the clusters, and a pipeline that scales the columns and adds the polynomial terms, so the exact same steps get applied to the test cars. The biggest thing I learned is to split the data before fitting anything and to score the model on cars it hasn't seen, since that is what shows whether it really works. I also refined my matplotlib skills.</p>
-  </div>
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+  <button class="lb-btn lb-close" type="button" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+  <div class="lb-stage" id="lbStage"></div>
+  <div class="lb-cap" id="lbCap"></div>
+  <button class="lb-btn lb-next" type="button" aria-label="Next photo">&rsaquo;</button>
 </dialog>
 
 <script>
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, reduce ? 0 : ms); }); };
-
-  // 0. Dark mode: follows the device, and the button overrides it
-  var root = document.documentElement;
-  var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  var themeBtn = document.getElementById('themeBtn');
-  var fadeTimer;
-  function fadeTheme() {
-    if (reduce) return;
-    root.classList.add('theme-fade');
-    clearTimeout(fadeTimer);
-    fadeTimer = setTimeout(function () { root.classList.remove('theme-fade'); }, 750);
-  }
-  function isDark() {
-    var t = root.getAttribute('data-theme');
-    return t ? t === 'dark' : darkQuery.matches;
-  }
-  function updateLabel() {
-    var dark = isDark();
-    themeBtn.setAttribute('data-mode', dark ? 'dark' : 'light');
-    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-  }
-  themeBtn.addEventListener('click', function () {
-    var next = isDark() ? 'light' : 'dark';
-    fadeTheme();
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-    updateLabel();
-  });
-  if (darkQuery.addEventListener) darkQuery.addEventListener('change', function () { fadeTheme(); updateLabel(); });
-  updateLabel();
-
-  // 1. Hero query types itself out, then the result table slides in
-  var lines = [
-    [['kw', 'SELECT'], ['', ' name, role, location']],
-    [['kw', 'FROM'], ['', '   me']],
-    [['kw', 'WHERE'], ['', '  status = '], ['str', "'open to opportunities'"], ['', ';']]
-  ];
-  async function typeHero() {
-    var out = document.getElementById('typed');
-    // If this ever runs twice, only the newest run is allowed to keep typing
-    var token = window.__heroRun = (window.__heroRun || 0) + 1;
-    out.textContent = '';
-    var cur = document.createElement('span');
-    cur.className = 'cursor';
-    out.appendChild(cur);
-    await sleep(500);
-    if (window.__heroRun !== token) return;
-    for (var l = 0; l < lines.length; l++) {
-      for (var s = 0; s < lines[l].length; s++) {
-        var seg = lines[l][s];
-        var el = document.createElement('span');
-        el.className = seg[0];
-        out.insertBefore(el, cur);
-        for (var c = 0; c < seg[1].length; c++) {
-          el.textContent += seg[1][c];
-          await sleep(35);
-          if (window.__heroRun !== token) return;
-        }
-      }
-      if (l < lines.length - 1) out.insertBefore(document.createTextNode('\n'), cur);
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    function show(name, focus) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === name;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById('panel-' + t.getAttribute('data-tab')).hidden = !on;
+        if (on && focus) t.focus();
+      });
+      try { history.replaceState(null, '', '#' + name); } catch (e) {}
     }
-    await sleep(350);
-    document.getElementById('heroResult').classList.add('show');
-  }
-  typeHero();
-
-  // 2. "Run query" buttons reveal result rows one by one
-  document.querySelectorAll('.run').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var out = btn.closest('.project').querySelector('.output');
-      out.classList.add('open');
-      out.querySelectorAll('tbody tr').forEach(function (tr, i) {
-        tr.classList.remove('in');
-        void tr.offsetWidth;
-        tr.style.animationDelay = (i * 130) + 'ms';
-        tr.classList.add('in');
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+        if (n === null) return;
+        e.preventDefault();
+        show(tabs[(n + tabs.length) % tabs.length].getAttribute('data-tab'), true);
       });
-      btn.textContent = 'Run again';
     });
-  });
-
-  // Project cards open a detailed view
-  document.querySelectorAll('[data-open]').forEach(function (card) {
-    var dlg = document.getElementById(card.getAttribute('data-open'));
-    card.addEventListener('click', function () { dlg.showModal(); });
-  });
-  document.querySelectorAll('dialog.detail').forEach(function (dlg) {
-    dlg.querySelector('.detail-close').addEventListener('click', function () { dlg.close(); });
-    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
-  });
-
-  // 3. Sections fade in as you scroll to them
-  var items = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    items.forEach(function (el) { io.observe(el); });
-  } else {
-    items.forEach(function (el) { el.classList.add('in'); });
-  }
+    var h = location.hash.slice(1);
+    if (['people', 'environments', 'cars', 'animals'].indexOf(h) > -1) show(h);
+  })();
 </script>
+
 <script>
-(function () {
-  var svg = document.querySelector('svg.er'); if (!svg) return;
-  var tables = svg.querySelectorAll('.er-t'), conns = svg.querySelectorAll('.er-c');
-  function show(name) {
-    svg.classList.add('on');
-    conns.forEach(function (c) { var hit = (' ' + c.getAttribute('data-t') + ' ').indexOf(' ' + name + ' ') > -1; c.classList.toggle('hit', hit);
-      if (hit) c.getAttribute('data-t').split(' ').forEach(function (n) { var t = svg.querySelector('.er-t[data-n="' + n + '"]'); if (t) t.classList.add('hit'); }); });
-  }
-  function clear() { svg.classList.remove('on'); svg.querySelectorAll('.hit').forEach(function (e) { e.classList.remove('hit'); }); }
-  tables.forEach(function (t) {
-    var n = t.getAttribute('data-n');
-    t.addEventListener('mouseenter', function () { clear(); show(n); });
-    t.addEventListener('mouseleave', clear);
-    t.addEventListener('focus', function () { clear(); show(n); });
-    t.addEventListener('blur', clear);
-  });
-})();
-</script>
-<script>
-(function () {
-  var dlg = document.getElementById('d-ml');
-  if (!dlg || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-  var items = dlg.querySelectorAll('.fig, .ml-stats, .r2');
-  items.forEach(function (el) { el.classList.add('anim'); });
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('play'); io.unobserve(e.target); } });
-  }, { threshold: 0.25 });
-  function arm() { items.forEach(function (el) { el.classList.remove('play'); io.observe(el); }); }
-  arm();
-  dlg.addEventListener('close', arm);
-})();
+  (function () {
+    var lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), cap = document.getElementById('lbCap');
+    var list = [], idx = 0;
+    var curW = 3, curH = 2;
+    // Size the photo to fit the screen while keeping its exact proportions
+    function fit() {
+      var el = stage.firstElementChild; if (!el) return;
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var k = Math.min(vw * 0.92 / curW, vh * 0.78 / curH);
+      el.style.width = Math.round(curW * k) + 'px';
+      el.style.height = Math.round(curH * k) + 'px';
+    }
+    function fill() {
+      var ex = list[idx];
+      var photo = ex.querySelector('.photo').cloneNode(true);
+      if (photo.tagName === 'IMG') {
+        photo.classList.remove('ph');
+        curW = +photo.getAttribute('width') || photo.naturalWidth || 3;
+        curH = +photo.getAttribute('height') || photo.naturalHeight || 2;
+        photo.removeAttribute('loading');
+      } else {
+        var ar = (ex.getAttribute('style').match(/--ar:\s*([\d.]+)\s*\/\s*([\d.]+)/) || [0, 3, 2]);
+        curW = +ar[1]; curH = +ar[2];
+        photo.className = 'photo ph';
+      }
+      photo.style.aspectRatio = 'auto';
+      stage.innerHTML = '';
+      stage.appendChild(photo);
+      fit();
+      cap.innerHTML = ex.querySelector('figcaption').innerHTML;
+    }
+    window.addEventListener('resize', fit);
+    function open(ex) {
+      var panel = ex.closest('.gallery');
+      list = Array.prototype.slice.call(panel.querySelectorAll('.exhibit'));
+      idx = list.indexOf(ex);
+      fill();
+      if (!lb.open) lb.showModal();
+    }
+    function step(d) { idx = (idx + d + list.length) % list.length; fill(); }
+    document.querySelectorAll('.exhibit .frame').forEach(function (f) {
+      f.addEventListener('click', function () { open(f.closest('.exhibit')); });
+      f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(f.closest('.exhibit')); } });
+    });
+    lb.querySelector('.lb-close').addEventListener('click', function () { lb.close(); });
+    lb.querySelector('.lb-prev').addEventListener('click', function () { step(-1); });
+    lb.querySelector('.lb-next').addEventListener('click', function () { step(1); });
+    // Clicking the dim area (anywhere that is not the photo or a button) closes it
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target === cap) lb.close(); });
+    lb.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    });
+  })();
 </script>
 </body>
 </html>
