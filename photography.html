@@ -47,7 +47,7 @@
   @keyframes hang { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
   /* The hang: everything shares one eye line */
-  .gallery { display: flex; flex-wrap: wrap; gap: 1.5rem 1.1rem; align-items: flex-start; padding-bottom: clamp(2rem, 5vw, 3.5rem); }
+  .gallery { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: flex-start; padding-bottom: clamp(2rem, 5vw, 3.5rem); }
   .exhibit { margin: 0; flex: var(--arn) 1 calc(var(--arn) * 13rem); max-width: calc(var(--arn) * 20rem); min-width: 0; }
   .frame { box-shadow: 0 2px 4px rgba(30,25,15,.10), 0 14px 30px -12px rgba(30,25,15,.28); transition: box-shadow .5s ease, transform .5s ease; }
   .exhibit:hover .frame { transform: translateY(-3px); box-shadow: 0 1px 1px rgba(30,25,15,.12), 0 16px 30px -8px rgba(30,25,15,.26), 0 40px 64px -24px rgba(30,25,15,.28); }
@@ -82,7 +82,8 @@
   @media (prefers-reduced-motion: reduce) { dialog.lb[open] { animation: none; } }
 
   /* Wall label */
-  figcaption { margin-top: .5rem; }
+  /* Camera and lens details only appear in the enlarged view */
+  .exhibit figcaption { display: none; }
   .m { display: block; font-family: var(--serif); font-style: italic; font-size: .85rem; color: var(--muted); line-height: 1.3; }
 
 
