@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photography | Zain Khan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wall: #f6f4ef;
+    --ink: #222019;
+    --muted: #7b766b;
+    --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--sans); font-weight: 300; overflow-x: hidden;
+    background:
+      radial-gradient(ellipse 90% 40rem at 50% -6rem, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+      var(--wall);
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.25rem, 5vw, 4rem); }
+
+  /* Opening wall text */
+  .intro { text-align: center; padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(3rem, 8vw, 6rem); }
+  .intro .eyebrow { margin: 0 0 1.4rem; font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+  .intro h1 { margin: 0; font-family: var(--serif); font-weight: 300; font-size: clamp(3rem, 9vw, 6.5rem); line-height: 1; letter-spacing: .01em; }
+  .intro .rule-unused { width: 3rem; height: 1px; background: var(--ink); opacity: .5; margin: 2rem auto 1.6rem; }
+  .intro .statement { margin: 0 auto; max-width: 34ch; font-family: var(--serif); font-style: italic; font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.5; color: var(--muted); }
+
+  .intro { padding-bottom: clamp(1.8rem, 4vw, 3rem); }
+  .about { max-width: 40rem; margin: 0 auto; padding: clamp(3rem, 7vw, 5rem) 0 clamp(4rem, 9vw, 6.5rem); text-align: center; border-top: 1px solid rgba(34,32,25,.15); }
+  .about h2 { margin: 0 0 1.1rem; font-family: var(--sans); font-weight: 400; font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+  .about p { margin: 0; font-family: var(--serif); font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.6; color: var(--ink); }
+  .intro .bar { position: relative; width: min(18rem, 64vw); height: 1px; margin: clamp(1.8rem, 4vw, 2.6rem) auto 0; }
+  .intro .bar::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(34,32,25,.6) 30%, rgba(34,32,25,.6) 70%, transparent); }
+  .tabs { display: flex; justify-content: center; gap: .4rem clamp(1.25rem, 4.5vw, 3.25rem); flex-wrap: wrap; padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+  .tab { appearance: none; background: none; border: 0; padding: .4rem 0; cursor: pointer; font-family: var(--serif); font-size: clamp(1.15rem, 2.6vw, 1.45rem); font-style: italic; color: var(--muted);
+    background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 50% 100%; background-size: 0 1px; transition: color .3s, background-size .35s ease; }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--ink); background-size: 100% 1px; }
+  .tab:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+  .gallery[hidden] { display: none; }
+  .gallery { animation: hang .6s ease both; outline: none; }
+  @keyframes hang { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* The hang: everything shares one eye line */
+  .gallery { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(1.5rem, 4vw, 4rem); row-gap: clamp(4rem, 10vw, 8rem); align-items: center; padding-bottom: clamp(3rem, 8vw, 6rem); }
+  .exhibit { margin: 0; }
+  .frame { box-shadow: 0 2px 4px rgba(30,25,15,.10), 0 14px 30px -12px rgba(30,25,15,.28); transition: box-shadow .5s ease, transform .5s ease; }
+  .exhibit:hover .frame { transform: translateY(-3px); box-shadow: 0 1px 1px rgba(30,25,15,.12), 0 16px 30px -8px rgba(30,25,15,.26), 0 40px 64px -24px rgba(30,25,15,.28); }
+  .photo { display: block; width: 100%; aspect-ratio: var(--ar, 4/5); object-fit: cover; }
+  img.photo { height: auto; }
+  .ph { display: grid; place-items: center; color: rgba(255,255,255,.55); background: linear-gradient(165deg, #cfcbc2, #aaa59a); }
+  .ph svg { width: 2.6rem; height: 2.6rem; }
+
+  .frame { cursor: zoom-in; }
+  .frame:focus-visible { outline: 1px solid var(--ink); outline-offset: 6px; }
+
+  /* Lightbox */
+  dialog.lb { border: 0; padding: 0; margin: 0; max-width: none; max-height: none; width: 100vw; height: 100vh; height: 100dvh; background: transparent; color: #f3f0e9; overflow: hidden; }
+  dialog.lb::backdrop { background: rgba(14,12,8,.88); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  dialog.lb[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; animation: lbIn .3s ease both; }
+  @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+  .lb-stage { display: flex; align-items: center; justify-content: center; max-width: 92vw; }
+  .lb-stage > * { display: block; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .lb-stage > .ph { display: grid; }
+  .lb-stage img { max-width: 92vw; max-height: 78vh; max-height: 78dvh; width: auto; height: auto; }
+  .lb-cap { margin-top: 1.1rem; text-align: center; display: flex; flex-direction: column; gap: .1rem; }
+  .lb-cap .t { font-size: 1.25rem; color: #f3f0e9; }
+  .lb-cap .m { color: #b9b3a6; }
+  .lb-cap .y { color: #b9b3a6; }
+  .lb-btn { position: absolute; background: none; border: 0; color: #f3f0e9; cursor: pointer; font-family: var(--serif); line-height: 1; opacity: .7; transition: opacity .2s; padding: .6rem .9rem; }
+  .lb-btn:hover, .lb-btn:focus-visible { opacity: 1; outline: none; }
+  .lb-close { top: 1rem; right: 1.2rem; font-size: 2.6rem; }
+  .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 3rem; }
+  .lb-prev { left: .6rem; } .lb-next { right: .6rem; }
+  @media (max-width: 48rem) { .lb-prev, .lb-next { top: auto; bottom: 1rem; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { dialog.lb[open] { animation: none; } }
+
+  /* Wall label */
+  figcaption { display: flex; flex-direction: column; gap: .15rem; margin-top: 1.1rem; padding-left: .2rem; }
+  .t { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; line-height: 1.2; }
+  .m { font-family: var(--serif); font-style: italic; font-size: 1rem; color: var(--muted); line-height: 1.3; }
+  .y { font-size: .78rem; letter-spacing: .12em; color: var(--muted); }
+
+  .e1 { grid-column: 2 / span 4; }
+  .e2 { grid-column: 8 / span 4; }
+  .e3 { grid-column: 3 / span 8; }
+  .e4 { grid-column: 1 / span 5; }
+  .e5 { grid-column: 8 / span 5; }
+  .e6 { grid-column: 2 / span 10; }
+
+  footer { text-align: center; padding: 0 0 3.5rem; font-size: .72rem; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+
+  @media (max-width: 48rem) {
+    .gallery { grid-template-columns: 1fr; row-gap: 4rem; }
+    .exhibit { grid-column: 1 / -1 !important; }
+    .e1, .e2, .e4, .e5 { width: min(100%, 24rem); justify-self: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .gallery { animation: none; } .tab { transition: none; } .frame { transition: none; } .exhibit:hover .frame { transform: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="intro">
+    <p class="eyebrow">Zain Khan</p>
+    <h1>Photography</h1>
+    <div class="bar" aria-hidden="true"></div>
+      </header>
+
+  <div class="tabs" role="tablist" aria-label="Photography categories">
+    <button class="tab" role="tab" id="tab-people" aria-controls="panel-people" aria-selected="true" data-tab="people">People</button>
+    <button class="tab" role="tab" id="tab-environments" aria-controls="panel-environments" aria-selected="false" tabindex="-1" data-tab="environments">Environments</button>
+    <button class="tab" role="tab" id="tab-cars" aria-controls="panel-cars" aria-selected="false" tabindex="-1" data-tab="cars">Cars</button>
+    <button class="tab" role="tab" id="tab-animals" aria-controls="panel-animals" aria-selected="false" tabindex="-1" data-tab="animals">Animals</button>
+  </div>
+
+  <main class="gallery" id="panel-people" role="tabpanel" aria-labelledby="tab-people" tabindex="0">
+    <figure class="exhibit e1" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 1</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e2" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e4" style="--ar:4/5">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 4</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e5" style="--ar:1/1">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 5</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e6" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 6</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <main class="gallery" id="panel-environments" role="tabpanel" aria-labelledby="tab-environments" tabindex="0" hidden>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 1</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e4" style="--ar:4/5">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e5" style="--ar:4/5">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e6" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 4</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <main class="gallery" id="panel-cars" role="tabpanel" aria-labelledby="tab-cars" tabindex="0" hidden>
+    <figure class="exhibit e1" style="--ar:1635/2000">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><img class="photo" src="photos/cars-mustang.jpg" width="1635" height="2000" alt="A black Ford Mustang driving along a curved road beneath red rock cliffs and green trees" loading="lazy"></div>
+      <figcaption><span class="t">Ford Mustang</span><span class="m">Sony A7C II &middot; Sony 24&ndash;240mm f/3.5&ndash;6.3</span></figcaption>
+    </figure>
+    <figure class="exhibit e2" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <main class="gallery" id="panel-animals" role="tabpanel" aria-labelledby="tab-animals" tabindex="0" hidden>
+    <figure class="exhibit e1" style="--ar:1635/2000">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><img class="photo" src="photos/cars-mustang.jpg" width="1635" height="2000" alt="A black Ford Mustang driving along a curved road beneath red rock cliffs and green trees" loading="lazy"></div>
+      <figcaption><span class="t">Ford Mustang</span><span class="m">Sony A7C II &middot; Sony 24&ndash;240mm f/3.5&ndash;6.3</span></figcaption>
+    </figure>
+    <figure class="exhibit e2" style="--ar:3/4">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 2</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+    <figure class="exhibit e3" style="--ar:3/2">
+      <div class="frame" tabindex="0" role="button" aria-label="View larger"><div class="photo ph" role="img" aria-label="Photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div></div>
+      <figcaption><span class="t">Untitled 3</span><span class="m">Digital photograph</span><span class="y">2026</span></figcaption>
+    </figure>
+  </main>
+
+  <section class="about" aria-labelledby="about-h">
+    <h2 id="about-h">About</h2>
+    <p>Placeholder bio for now.</p>
+  </section>
+</div>
+
+<footer>&copy; 2026 Zain Khan</footer>
+
+
+<dialog class="lb" id="lb" aria-label="Photo viewer">
+  <button class="lb-btn lb-close" type="button" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+  <div class="lb-stage" id="lbStage"></div>
+  <div class="lb-cap" id="lbCap"></div>
+  <button class="lb-btn lb-next" type="button" aria-label="Next photo">&rsaquo;</button>
+</dialog>
+
+<script>
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    function show(name, focus) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === name;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById('panel-' + t.getAttribute('data-tab')).hidden = !on;
+        if (on && focus) t.focus();
+      });
+      try { history.replaceState(null, '', '#' + name); } catch (e) {}
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+        if (n === null) return;
+        e.preventDefault();
+        show(tabs[(n + tabs.length) % tabs.length].getAttribute('data-tab'), true);
+      });
+    });
+    var h = location.hash.slice(1);
+    if (['people', 'environments', 'cars', 'animals'].indexOf(h) > -1) show(h);
+  })();
+</script>
+
+<script>
+  (function () {
+    var lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), cap = document.getElementById('lbCap');
+    var list = [], idx = 0;
+    function fill() {
+      var ex = list[idx];
+      var photo = ex.querySelector('.photo').cloneNode(true);
+      photo.classList.remove('ph');
+      if (photo.tagName !== 'IMG') {
+        // Placeholder: size it by its aspect ratio so it fits the screen like a real photo would
+        var ar = (ex.getAttribute('style').match(/--ar:\s*([\d.]+)\s*\/\s*([\d.]+)/) || [0, 3, 2]);
+        var w = +ar[1] / +ar[2];
+        photo.className = 'photo ph';
+        photo.style.width = 'min(92vw, calc(78vh * ' + w + '))';
+        photo.style.aspectRatio = ar[1] + ' / ' + ar[2];
+      }
+      stage.innerHTML = '';
+      stage.appendChild(photo);
+      cap.innerHTML = ex.querySelector('figcaption').innerHTML;
+    }
+    function open(ex) {
+      var panel = ex.closest('.gallery');
+      list = Array.prototype.slice.call(panel.querySelectorAll('.exhibit'));
+      idx = list.indexOf(ex);
+      fill();
+      if (!lb.open) lb.showModal();
+    }
+    function step(d) { idx = (idx + d + list.length) % list.length; fill(); }
+    document.querySelectorAll('.exhibit .frame').forEach(function (f) {
+      f.addEventListener('click', function () { open(f.closest('.exhibit')); });
+      f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(f.closest('.exhibit')); } });
+    });
+    lb.querySelector('.lb-close').addEventListener('click', function () { lb.close(); });
+    lb.querySelector('.lb-prev').addEventListener('click', function () { step(-1); });
+    lb.querySelector('.lb-next').addEventListener('click', function () { step(1); });
+    // Clicking the dim area (anywhere that is not the photo or a button) closes it
+    lb.addEventListener('click', function (e) { if (e.target === lb || e.target === cap) lb.close(); });
+    lb.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    });
+  })();
+</script>
+</body>
+</html>
