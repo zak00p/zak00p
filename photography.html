@@ -6,19 +6,43 @@
 <title>Photography | Zain Khan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<script>
+  try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 <style>
   :root {
+    color-scheme: light;
     --wall: #f6f4ef;
     --ink: #222019;
     --muted: #7b766b;
+    --glow: rgba(255,255,255,.95);
+    --hair: rgba(34,32,25,.15);
+    --bar: rgba(34,32,25,.6);
+    --sh: 30,25,15;
     --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
     --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
   }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { color-scheme: dark; --wall: #141310; --ink: #ece8df; --muted: #9a958a; --glow: rgba(255,244,222,.07); --hair: rgba(236,232,223,.16); --bar: rgba(236,232,223,.5); --sh: 0,0,0; }
+  }
+  :root[data-theme="dark"] { color-scheme: dark; --wall: #141310; --ink: #ece8df; --muted: #9a958a; --glow: rgba(255,244,222,.07); --hair: rgba(236,232,223,.16); --bar: rgba(236,232,223,.5); --sh: 0,0,0; }
+  html.theme-fade, html.theme-fade *:not(.theme):not(.theme *) { transition: background-color .5s ease, color .5s ease, border-color .5s ease !important; }
+  .theme { position: fixed; top: 1rem; right: 1.2rem; z-index: 5; display: inline-flex; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; padding: 0; background: transparent; color: var(--muted); border: 1px solid var(--hair); border-radius: 50%; cursor: pointer; transition: border-color .2s, color .2s, transform .3s; }
+  .theme:hover, .theme:focus-visible { border-color: var(--ink); color: var(--ink); transform: rotate(20deg); outline: none; }
+  .theme svg { width: 18px; height: 18px; }
+  .theme .rays { transform-origin: 12px 12px; transition: transform .95s cubic-bezier(.4, 0, .2, 1); }
+  .theme .rays line { transform-origin: 12px 12px; transition: transform .7s cubic-bezier(.3, 0, .2, 1), opacity .7s ease; transition-delay: calc(var(--i) * 35ms); }
+  .theme .sweep { fill: currentColor; stroke: none; }
+  .theme .sweep { transform: translate(7px,-7px); transition: transform .8s cubic-bezier(.45,0,.2,1); }
+  .theme[data-mode="dark"] .sweep { transform: translate(0,0); transition: transform .8s cubic-bezier(.45,0,.2,1) .17s; }
+  .theme[data-mode="dark"] .rays { transform: rotate(45deg); }
+  .theme[data-mode="dark"] .rays line { transform: scale(.5); opacity: 0; transition: transform .5s cubic-bezier(.4, 0, .2, 1), opacity .5s ease; transition-delay: calc(var(--i) * 30ms); }
+  @media (prefers-reduced-motion: reduce) { .theme *, .theme { transition: none !important; } }
   * { box-sizing: border-box; }
   body {
     margin: 0; min-height: 100vh; color: var(--ink); font-family: var(--sans); font-weight: 300; overflow-x: hidden;
     background:
-      radial-gradient(ellipse 90% 40rem at 50% -6rem, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+      radial-gradient(ellipse 90% 40rem at 50% -6rem, var(--glow), transparent 70%),
       var(--wall);
   }
   .wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.25rem, 5vw, 4rem); }
@@ -31,11 +55,11 @@
   .intro .statement { margin: 0 auto; max-width: 34ch; font-family: var(--serif); font-style: italic; font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.5; color: var(--muted); }
 
   .intro { padding-bottom: clamp(1.2rem, 3vw, 1.8rem); }
-  .about { max-width: 40rem; margin: 0 auto; padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 3.5rem); text-align: center; border-top: 1px solid rgba(34,32,25,.15); }
+  .about { max-width: 40rem; margin: 0 auto; padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 3.5rem); text-align: center; border-top: 1px solid var(--hair); }
   .about h2 { margin: 0 0 1.1rem; font-family: var(--sans); font-weight: 400; font-size: .72rem; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
   .about p { margin: 0; font-family: var(--serif); font-size: clamp(1.15rem, 2.4vw, 1.4rem); line-height: 1.6; color: var(--ink); }
   .intro .bar { position: relative; width: min(18rem, 64vw); height: 1px; margin: clamp(1.2rem, 3vw, 1.7rem) auto 0; }
-  .intro .bar::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(34,32,25,.6) 30%, rgba(34,32,25,.6) 70%, transparent); }
+  .intro .bar::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--bar) 30%, var(--bar) 70%, transparent); }
   .tabs { display: flex; justify-content: center; gap: .4rem clamp(1.25rem, 4.5vw, 3.25rem); flex-wrap: wrap; padding-bottom: clamp(1.5rem, 3.5vw, 2.4rem); }
   .tab { appearance: none; background: none; border: 0; padding: .4rem 0; cursor: pointer; font-family: var(--serif); font-size: clamp(1.15rem, 2.6vw, 1.45rem); font-style: italic; color: var(--muted);
     background-image: linear-gradient(var(--ink), var(--ink)); background-repeat: no-repeat; background-position: 50% 100%; background-size: 0 1px; transition: color .3s, background-size .35s ease; }
@@ -49,8 +73,8 @@
   /* The hang: everything shares one eye line */
   .gallery { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: flex-start; padding-bottom: clamp(2rem, 5vw, 3.5rem); }
   .exhibit { margin: 0; flex: var(--arn) 1 calc(var(--arn) * 13rem); max-width: calc(var(--arn) * 20rem); min-width: 0; }
-  .frame { box-shadow: 0 2px 4px rgba(30,25,15,.10), 0 14px 30px -12px rgba(30,25,15,.28); transition: box-shadow .5s ease, transform .5s ease; }
-  .exhibit:hover .frame { transform: translateY(-3px); box-shadow: 0 1px 1px rgba(30,25,15,.12), 0 16px 30px -8px rgba(30,25,15,.26), 0 40px 64px -24px rgba(30,25,15,.28); }
+  .frame { box-shadow: 0 2px 4px rgba(var(--sh),.10), 0 14px 30px -12px rgba(var(--sh),.28); transition: box-shadow .5s ease, transform .5s ease; }
+  .exhibit:hover .frame { transform: translateY(-3px); box-shadow: 0 1px 1px rgba(var(--sh),.12), 0 16px 30px -8px rgba(var(--sh),.26), 0 40px 64px -24px rgba(var(--sh),.28); }
   .photo { display: block; width: 100%; aspect-ratio: var(--ar, 4/5); object-fit: cover; }
   img.photo { height: auto; }
   .ph { display: grid; place-items: center; color: rgba(255,255,255,.55); background: linear-gradient(165deg, #cfcbc2, #aaa59a); }
@@ -97,6 +121,23 @@
 </style>
 </head>
 <body>
+<button class="theme" id="themeBtn" type="button" aria-label="Switch to dark mode" data-mode="light">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <defs><clipPath id="discClip"><circle cx="12" cy="12" r="4"/></clipPath></defs>
+    <circle class="disc" cx="12" cy="12" r="4"/>
+    <g clip-path="url(#discClip)"><circle class="sweep" cx="14" cy="10" r="4"/></g>
+    <g class="rays">
+      <line style="--i:0" x1="12" y1="2" x2="12" y2="4"/>
+      <line style="--i:1" x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+      <line style="--i:2" x1="20" y1="12" x2="22" y2="12"/>
+      <line style="--i:3" x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+      <line style="--i:4" x1="12" y1="20" x2="12" y2="22"/>
+      <line style="--i:5" x1="4.93" y1="19.07" x2="6.34" y2="17.66"/>
+      <line style="--i:6" x1="2" y1="12" x2="4" y2="12"/>
+      <line style="--i:7" x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>
+    </g>
+  </svg>
+</button>
 
 <div class="wrap">
   <header class="intro">
@@ -237,6 +278,22 @@
   <button class="lb-btn lb-next" type="button" aria-label="Next photo">&rsaquo;</button>
 </dialog>
 
+<script>
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('themeBtn');
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, tm;
+    function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : mq.matches; }
+    function label() { var d = isDark(); btn.setAttribute('data-mode', d ? 'dark' : 'light'); btn.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); }
+    function fade() { if (reduce) return; root.classList.add('theme-fade'); clearTimeout(tm); tm = setTimeout(function () { root.classList.remove('theme-fade'); }, 700); }
+    btn.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark'; fade(); root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {} label();
+    });
+    if (mq.addEventListener) mq.addEventListener('change', function () { fade(); label(); });
+    label();
+  })();
+</script>
 <script>
   (function () {
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
