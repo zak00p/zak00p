@@ -118,6 +118,14 @@
     .exhibit { flex: 1 1 100%; max-width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) { .gallery { animation: none; } .tab { transition: none; } .frame { transition: none; } .exhibit:hover .frame { transform: none; } }
+  /* Watermark drawn over every photo by the page itself */
+  .frame, .lb-stage { position: relative; }
+  .frame::after, .lb-stage::after { content: "\00a9  Zain Khan"; position: absolute; right: 3.5%; bottom: 3%; font-family: var(--serif); font-style: italic; font-size: .8rem; letter-spacing: .02em; color: rgba(255,255,255,.72); text-shadow: 0 1px 3px rgba(0,0,0,.6); pointer-events: none; user-select: none; -webkit-user-select: none; }
+  .lb-stage::after { font-size: 1.05rem; }
+  .frame:has(.ph)::after { display: none; }
+  /* Light deterrents against saving photos: no drag, no long-press menu, images ignore the pointer */
+  img.photo, .lb-stage img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; pointer-events: none; }
+  .frame, .lb-stage { -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
 </style>
 </head>
 <body>
@@ -304,6 +312,13 @@
     });
     if (mq.addEventListener) mq.addEventListener('change', function () { fade(); label(); });
     label();
+  })();
+</script>
+<script>
+  (function () {
+    function stop(e) { if (e.target.closest && e.target.closest('.frame, .lb, .exhibit')) e.preventDefault(); }
+    document.addEventListener('contextmenu', stop);
+    document.addEventListener('dragstart', function (e) { if (e.target.tagName === 'IMG') e.preventDefault(); });
   })();
 </script>
 <script>
