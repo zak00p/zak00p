@@ -155,13 +155,15 @@
       </header>
 
   <div class="tabs" role="tablist" aria-label="Photography categories">
-    <button class="tab" role="tab" id="tab-people" aria-controls="panel-people" aria-selected="true" data-tab="people">People</button>
+    <button class="tab" role="tab" id="tab-people" aria-controls="panel-people" aria-selected="false" tabindex="0" data-tab="people">People</button>
     <button class="tab" role="tab" id="tab-environments" aria-controls="panel-environments" aria-selected="false" tabindex="-1" data-tab="environments">Environments</button>
     <button class="tab" role="tab" id="tab-cars" aria-controls="panel-cars" aria-selected="false" tabindex="-1" data-tab="cars">Cars</button>
     <button class="tab" role="tab" id="tab-animals" aria-controls="panel-animals" aria-selected="false" tabindex="-1" data-tab="animals">Animals</button>
   </div>
 
-  <main class="gallery" id="panel-people" role="tabpanel" aria-labelledby="tab-people" tabindex="0">
+  <main class="gallery" id="panel-all" aria-label="All photographs"></main>
+
+  <main class="gallery" id="panel-people" role="tabpanel" aria-labelledby="tab-people" tabindex="0" hidden>
     <figure class="exhibit" style="--ar:1600/2400;--arn:0.6667">
       <div class="frame" tabindex="0" role="button" aria-label="View larger"><img class="photo" src="photos/people-hair.jpg" width="1600" height="2400" alt="Portrait photograph" loading="lazy"></div>
       <figcaption><span class="m">Sony A7C II &middot; Sony 24&ndash;70mm f/2.8 GM II</span></figcaption>
@@ -347,19 +349,33 @@
 </script>
 <script>
   (function () {
+    var names = ['people', 'environments', 'cars', 'animals'];
     var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var all = document.getElementById('panel-all');
+    var current = null;
+    // Build the combined gallery: the photos from every category, mixed together
+    (function () {
+      var lists = names.map(function (n) { return Array.prototype.slice.call(document.querySelectorAll('#panel-' + n + ' .exhibit')); });
+      var longest = Math.max.apply(null, lists.map(function (l) { return l.length; }));
+      for (var i = 0; i < longest; i++) lists.forEach(function (l) { if (l[i]) all.appendChild(l[i].cloneNode(true)); });
+    })();
     function show(name, focus) {
+      current = name;
+      all.hidden = !!name;
       tabs.forEach(function (t) {
-        var on = t.getAttribute('data-tab') === name;
+        var key = t.getAttribute('data-tab'), on = key === name;
         t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.tabIndex = on ? 0 : -1;
-        document.getElementById('panel-' + t.getAttribute('data-tab')).hidden = !on;
+        document.getElementById('panel-' + key).hidden = !on;
         if (on && focus) t.focus();
       });
-      try { history.replaceState(null, '', '#' + name); } catch (e) {}
+      try { history.replaceState(null, '', name ? '#' + name : location.pathname + location.search); } catch (e) {}
     }
     tabs.forEach(function (t, i) {
-      t.addEventListener('click', function () { show(t.getAttribute('data-tab')); });
+      t.tabIndex = 0;
+      t.addEventListener('click', function () {
+        var key = t.getAttribute('data-tab');
+        show(current === key ? null : key);
+      });
       t.addEventListener('keydown', function (e) {
         var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
         if (n === null) return;
@@ -368,7 +384,7 @@
       });
     });
     var h = location.hash.slice(1);
-    if (['people', 'environments', 'cars', 'animals'].indexOf(h) > -1) show(h);
+    if (names.indexOf(h) > -1) show(h); else show(null);
   })();
 </script>
 
